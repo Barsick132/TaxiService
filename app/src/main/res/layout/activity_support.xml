@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:padding="16dp"
+              android:background="@color/colorDefault"
+>
+    <EditText
+            android:hint="@string/yourEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/editText13"
+            android:layout_weight="0"
+    />
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="0dp"
+                  android:background="@color/colorAccent"
+                  android:padding="1dp"
+                  android:orientation="vertical"
+                  android:layout_weight="1"
+    >
+        <EditText
+                android:hint="@string/contentMesseg"
+                android:gravity="start"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textMultiLine"
+                android:padding="5dp"
+                android:ems="10"
+                android:id="@+id/editText12"
+                android:background="@color/colorDefault"
+        />
+    </LinearLayout>
+    <Button
+            android:text="@string/btnSendInquiry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/button3"
+            android:layout_weight="0"
+    />
+</LinearLayout>

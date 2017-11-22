@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colorDefault"
+>
+    <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:theme="?attr/actionBarTheme"
+            android:minHeight="?attr/actionBarSize"
+            android:id="@+id/toolbar"/>
+    <ru.yandex.yandexmapkit.MapView
+            android:id="@+id/map"
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:apiKey="WT1goYZNqbPdNBMruaSCPPmR3er4QXd-X9XVg6MR15ATij2rmtpUY-SCHS7gB1z-XHSNb4PlE1WpuljfF9Q5~Kv8JLeuJFp6fQxoLRiB37o="
+            android:layout_weight="1"
+    />
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+    >
+        <Button android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/annulment"
+                android:layout_weight="1"
+        />
+        <Button android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/calling"
+                android:layout_weight="1"
+        />
+    </LinearLayout>
+    <Button android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/detailOrder"
+    />
+</LinearLayout>

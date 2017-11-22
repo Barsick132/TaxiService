@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:padding="16dp"
+              android:background="@color/colorDefault"
+>
+    <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPostalAddress"
+            android:ems="10"
+            android:id="@+id/editText8"
+            android:drawableStart="@drawable/ic_edit_location_black_24dp"
+            android:hint="@string/whence"/>
+    <EditText
+            android:layout_width="85dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:layout_marginTop="5dp"
+            android:ems="10"
+            android:id="@+id/editText9"
+            android:hint="@string/entrance"
+            android:layout_marginLeft="24dp"
+            android:maxLength="2"
+    />
+    <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPostalAddress"
+            android:ems="10"
+            android:layout_marginTop="5dp"
+            android:id="@+id/editText10"
+            android:drawableStart="@drawable/ic_edit_location_black_24dp2"
+            android:hint="@string/where"/>
+    <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner_list"
+            android:layout_marginTop="5dp"
+    />
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:background="@color/colorAccent"
+                  android:padding="1dp"
+                  android:gravity="center"
+                  android:layout_marginTop="5dp">
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:inputType="textMultiLine"
+                android:padding="5dp"
+                android:ems="10"
+                android:gravity="start"
+                android:id="@+id/editText11"
+                android:hint="@string/comment"
+                android:background="@color/colorDefault"
+        />
+
+    </LinearLayout>
+    <Button
+            android:text="@string/completeCheckout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/button"
+            android:layout_marginTop="5dp"
+    />
+
+
+</LinearLayout>
