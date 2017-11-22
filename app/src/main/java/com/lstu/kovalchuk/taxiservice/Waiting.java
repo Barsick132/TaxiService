@@ -49,4 +49,12 @@ public class Waiting extends AppCompatActivity {
         Intent intent = new Intent(this, Menu.class);
         startActivity(intent);
     }
+
+    public void openDetailOrder(View view) {
+        Intent intent = new Intent(this, DetailOrder.class);
+        startActivity(intent);
+    }
+
+    public void closeOrder(View view) {
+    }
 }

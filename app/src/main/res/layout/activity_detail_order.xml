@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colorDefault"
+>
+    <TextView
+            android:text="@string/detailOrder"
+            android:textSize="30sp"
+            android:textColor="@color/colorAccent"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView24"
+            android:background="@color/colorHeaderWindow"/>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  android:paddingTop="8dp"
+                  android:paddingStart="16dp"
+                  android:paddingEnd="16dp"
+                  android:paddingBottom="8dp"
+    >
+        <TextView
+                android:text="@string/detailWhence"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView27"
+                android:paddingTop="5dp"
+                android:textStyle="bold"
+        />
+        <TextView
+                android:text="г. Липецк, ул. Стаханова, 13, п. 4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="2dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="0dp"
+                android:id="@+id/textView28"/>
+        <TextView
+                android:text="@string/detailWhere"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:id="@+id/textView29"
+                android:textStyle="bold"
+        />
+        <TextView
+                android:text="г. Липецк, ул. Московская, 30"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="2dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="0dp"
+                android:id="@+id/textView30"/>
+        <TextView
+                android:text="@string/approximateCost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:id="@+id/textView31"
+                android:textStyle="bold"
+        />
+        <TextView
+                android:text="128 руб."
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="2dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="0dp"
+                android:id="@+id/textView32"/>
+        <TextView
+                android:text="@string/approximateTravelTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:id="@+id/textView33"
+                android:textStyle="bold"
+        />
+        <TextView
+                android:text="8 мин."
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="2dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="0dp"
+                android:id="@+id/textView34"/>
+        <TextView
+                android:text="@string/approximateDistance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:id="@+id/textView35"
+                android:textStyle="bold"
+        />
+        <TextView
+                android:text="2.5 км"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="2dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="0dp"
+                android:id="@+id/textView36"/>
+        <TextView
+                android:text="@string/timeWaiting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:id="@+id/textView37"
+                android:textStyle="bold"
+        />
+        <TextView
+                android:text="3 мин."
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="2dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="0dp"
+                android:id="@+id/textView38"/>
+    </LinearLayout>
+
+    <View android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@color/colorBlack">
+        <!-- Просто линия-->
+    </View>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  android:paddingTop="8dp"
+                  android:paddingStart="16dp"
+                  android:paddingEnd="16dp"
+                  android:paddingBottom="8dp"
+    >
+        <TextView
+                android:text="@string/driverName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:id="@+id/textView39"
+                android:textStyle="bold"
+        />
+        <TextView
+                android:text="Семенов Геннадий Степанович"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="2dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="0dp"
+                android:id="@+id/textView40"/>
+        <TextView
+                android:text="@string/brandCar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:id="@+id/textView41"
+                android:textStyle="bold"
+        />
+        <TextView
+                android:text="Renault Logan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="2dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="0dp"
+                android:id="@+id/textView42"/>
+        <TextView
+                android:text="@string/colorCar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:id="@+id/textView43"
+                android:textStyle="bold"
+        />
+        <TextView
+                android:text="Белый"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="2dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="0dp"
+                android:id="@+id/textView44"/>
+        <TextView
+                android:text="@string/numberCar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:id="@+id/textView45"
+                android:textStyle="bold"
+        />
+        <TextView
+                android:text="М304АК/24"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="2dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="0dp"
+                android:id="@+id/textView46"/>
+    </LinearLayout>
+
+    <View android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@color/colorBlack">
+        <!-- Просто линия-->
+    </View>
+</LinearLayout>

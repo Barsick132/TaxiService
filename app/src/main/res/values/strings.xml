@@ -3,16 +3,16 @@
     <string name="mark_on_map">Отметить на карте</string>
     <string name="menu">Меню</string>
 
-    //system
+    //System
     <string name="logo">LOGO</string>
 
-    //activity_main
+    //Main
     <string name="phone">Телефон</string>
     <string name="password">Пароль</string>
     <string name="signIn">Войти</string>
     <string name="registration">Регистрация</string>
 
-    //activity_registration
+    //Registration
     <string name="lastName">Фамилия</string>
     <string name="firstName">Имя</string>
     <string name="confirmPass">Повторите пароль</string>
@@ -35,6 +35,7 @@
     <string name="comment">Комментарий</string>
     <string name="completeCheckout">Вызвать такси</string>
     <string name="entrance">Подъезд</string>
+    <string name="approximateCost">Приблизительная стоимость поездки</string>
 
     //Waiting
     <string name="annulment">Отменить заказ</string>
@@ -67,6 +68,18 @@
     <string name="enterYourNewPass">Введите ваш новый пароль</string>
     <string name="enterYourNewConfirmPass">Повторите ваш новый пароль</string>
     <string name="save">Сохранить</string>
+
+    //DetailOrder
+    <string name="detailWhence">Откуда</string>
+    <string name="detailWhere">Куда</string>
+    <string name="approximateTravelTime">Приблизительное время поездки</string>
+    <string name="approximateDistance">Приблизительное расстояние</string>
+    <string name="timeWaiting">Приблизительное время ожидания</string>
+    <string name="driverName">ФИО водителя</string>
+    <string name="brandCar">Марка машины</string>
+    <string name="colorCar">Цвет машины</string>
+    <string name="numberCar">Номер машины</string>
+
 
     //About
     <string name="program">Программа</string>

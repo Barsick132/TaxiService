@@ -27,15 +27,19 @@
                 android:layout_height="wrap_content"
                 android:text="@string/annulment"
                 android:layout_weight="1"
+                android:onClick="closeOrder"
+                style="?android:attr/buttonBarButtonStyle"
         />
         <Button android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/calling"
                 android:layout_weight="1"
+                style="?android:attr/buttonBarButtonStyle"
         />
     </LinearLayout>
     <Button android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/detailOrder"
+            android:onClick="openDetailOrder"
     />
 </LinearLayout>

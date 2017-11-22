@@ -7,20 +7,138 @@
               android:background="@color/colorDefault"
 >
 
-        <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPostalAddress"
-                android:ems="10"
-                android:id="@+id/editText8"
-                android:drawableStart="@drawable/ic_edit_location_black_24dp2"
-                android:hint="@string/where"/>
+    <EditText
+            android:text="Московская 30"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPostalAddress"
+            android:ems="10"
+            android:id="@+id/editText8"
+            android:drawableStart="@drawable/ic_edit_location_black_24dp2"
+            android:hint="@string/where"/>
     <Button
             android:layout_marginTop="5dp"
             android:text="@string/mark_on_map"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     <ScrollView android:layout_width="match_parent" android:layout_height="match_parent">
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical"
+        >
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical"
+            >
+                <TextView android:text="Московская улица, 30"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:textSize="18sp"
+                          android:paddingTop="10dp"
+                          android:textColor="@color/colorBlack"
+                />
+                <TextView android:text="Липецк, Россия"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:paddingBottom="10dp"
+                />
+            </LinearLayout>
+            <View android:layout_width="match_parent"
+                  android:layout_height="1dp"
+                  android:background="@color/colorBlack"
+            >
 
+            </View>
+
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical"
+            >
+                <TextView android:text="Московская улица, 30Б"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:textSize="18sp"
+                          android:paddingTop="10dp"
+                          android:textColor="@color/colorBlack"
+                />
+                <TextView android:text="Липецк, Россия"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:paddingBottom="10dp"
+                />
+            </LinearLayout>
+            <View android:layout_width="match_parent"
+                  android:layout_height="1dp"
+                  android:background="@color/colorBlack"
+            >
+
+            </View>
+
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical"
+            >
+                <TextView android:text="Московская улица, 30Д"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:textSize="18sp"
+                          android:paddingTop="10dp"
+                          android:textColor="@color/colorBlack"
+                />
+                <TextView android:text="Липецк, Россия"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:paddingBottom="10dp"
+                />
+            </LinearLayout>
+            <View android:layout_width="match_parent"
+                  android:layout_height="1dp"
+                  android:background="@color/colorBlack"
+            >
+
+            </View>
+
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical"
+            >
+                <TextView android:text="Московская улица, 30А"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:textSize="18sp"
+                          android:paddingTop="10dp"
+                          android:textColor="@color/colorBlack"
+                />
+                <TextView android:text="Липецк, Россия"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:paddingBottom="10dp"
+                />
+            </LinearLayout>
+            <View android:layout_width="match_parent"
+                  android:layout_height="1dp"
+                  android:background="@color/colorBlack"
+            >
+
+            </View>
+
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical"
+            >
+                <TextView android:text="Московская улица, 30к2"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:textSize="18sp"
+                          android:paddingTop="10dp"
+                          android:textColor="@color/colorBlack"
+                />
+                <TextView android:text="Липецк, Россия"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:paddingBottom="10dp"
+                />
+            </LinearLayout>
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>

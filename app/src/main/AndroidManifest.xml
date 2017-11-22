@@ -48,6 +48,8 @@
         </activity>
         <activity android:name=".Cards">
         </activity>
+        <activity android:name=".DetailOrder">
+        </activity>
     </application>
 
 </manifest>
