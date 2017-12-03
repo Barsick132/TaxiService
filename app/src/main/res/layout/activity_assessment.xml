@@ -30,35 +30,41 @@
                     android:layout_height="70dp"
                     android:id="@+id/textView19"
                     android:background="@drawable/ic_star_black_24dp"
+                    android:onClick="star1"
             />
             <TextView
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:id="@+id/textView20"
                     android:background="@drawable/ic_star_black_24dp"
+                    android:onClick="star2"
             />
             <TextView
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:id="@+id/textView21"
                     android:background="@drawable/ic_star_black_24dp"
+                    android:onClick="star3"
             />
             <TextView
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:id="@+id/textView22"
                     android:background="@drawable/ic_star_half_black_24dp"
+                    android:onClick="star4"
             />
             <TextView
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:id="@+id/textView23"
                     android:background="@drawable/ic_star_border_black_24dp"
+                    android:onClick="star5"
             />
         </LinearLayout>
     </LinearLayout>
     <Button android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/save"
+            android:onClick="saveAssessment"
     />
 </LinearLayout>

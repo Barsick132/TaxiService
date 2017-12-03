@@ -14,7 +14,7 @@
             android:ems="10"
             android:id="@+id/editText3"
             android:hint="@string/phone"
-            android:drawableLeft="@drawable/ic_phone_black_24dp">
+            android:drawableStart="@drawable/ic_phone_black_24dp">
     </EditText>
     <EditText
             android:layout_width="match_parent"

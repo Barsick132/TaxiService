@@ -34,6 +34,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/calling"
                 android:layout_weight="1"
+                android:onClick="openPhoneKeyboard"
                 style="?android:attr/buttonBarButtonStyle"
         />
     </LinearLayout>

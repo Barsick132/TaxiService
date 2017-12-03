@@ -13,6 +13,7 @@ import ru.yandex.yandexmapkit.utils.GeoPoint;
 public class Waiting extends AppCompatActivity {
 
     private android.support.v7.widget.Toolbar toolbar;
+    private DriverGPS driverGPS;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,5 +57,16 @@ public class Waiting extends AppCompatActivity {
     }
 
     public void closeOrder(View view) {
+        Intent intent = new Intent(this, Global.class);
+        startActivity(intent);
+    }
+
+    private void updateDriverLocation() {
+        Intent intent = new Intent(this, Assessment.class);
+        startActivity(intent);
+
+    }
+
+    public void openPhoneKeyboard(View view) {
     }
 }

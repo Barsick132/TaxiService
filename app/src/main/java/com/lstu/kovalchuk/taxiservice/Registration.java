@@ -4,8 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 
 public class Registration extends Activity{
+
+    private EditText etPhone = (EditText)findViewById(R.id.editText);
+    private EditText etLastName = (EditText)findViewById(R.id.editText);
+    private EditText etFirstName = (EditText)findViewById(R.id.editText);
+    private EditText etPass = (EditText)findViewById(R.id.editText);
+    private EditText etConfirmPass = (EditText)findViewById(R.id.editText);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toolbar;
 import ru.yandex.yandexmapkit.MapController;
 import ru.yandex.yandexmapkit.MapView;
@@ -46,11 +47,17 @@ public class Global extends Activity {
     }
 
     public void checkout(View view) {
-
+        Intent intent = new Intent(this, Where.class);
+        startActivity(intent);
     }
 
     public void openMenu(MenuItem item) {
         Intent intent = new Intent(this, Menu.class);
+        startActivity(intent);
+    }
+
+    public void checkWhence(View view) {
+        Intent intent = new Intent(this, Whence.class);
         startActivity(intent);
     }
 }
