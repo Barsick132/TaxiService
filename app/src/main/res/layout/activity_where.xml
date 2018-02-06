@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPostalAddress"
             android:ems="10"
-            android:id="@+id/editText8"
+            android:id="@+id/whereAddress"
             android:drawableStart="@drawable/ic_edit_location_black_24dp2"
             android:hint="@string/where"/>
     <Button

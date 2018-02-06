@@ -20,7 +20,7 @@ public class Waiting extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_waiting);
 
-        final MapView mMapView = (MapView) findViewById(R.id.map);
+        final MapView mMapView = (MapView) findViewById(R.id.WaitingMap);
 
 // Получаем MapController
         MapController mMapController = mMapView.getMapController();
@@ -35,7 +35,7 @@ public class Waiting extends AppCompatActivity {
     }
 
     private void initToolbar() {
-        toolbar = (android.support.v7.widget.Toolbar)findViewById(R.id.toolbar);
+        toolbar = (android.support.v7.widget.Toolbar)findViewById(R.id.WaitingToolbar);
         toolbar.setOnMenuItemClickListener(new android.support.v7.widget.Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {

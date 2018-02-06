@@ -20,7 +20,7 @@ public class Global extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_global);
 
-        final MapView mMapView = (MapView) findViewById(R.id.map);
+        final MapView mMapView = (MapView) findViewById(R.id.globalMap1);
 
 // Получаем MapController
         MapController mMapController = mMapView.getMapController();
@@ -35,7 +35,7 @@ public class Global extends Activity {
     }
 
     private void initToolbar() {
-        toolbar = (android.support.v7.widget.Toolbar)findViewById(R.id.toolbar);
+        toolbar = (android.support.v7.widget.Toolbar)findViewById(R.id.globalToolbar1);
         toolbar.setOnMenuItemClickListener(new android.support.v7.widget.Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {

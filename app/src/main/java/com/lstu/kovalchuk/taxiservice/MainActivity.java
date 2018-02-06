@@ -6,15 +6,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
-    private EditText etPhone = (EditText)findViewById(R.id.editText);
-    private EditText etPassword = (EditText)findViewById(R.id.editText2);
+    private EditText etPhone;
+    private EditText etPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        etPhone = (EditText)findViewById(R.id.mainPhone);
+        etPassword = (EditText)findViewById(R.id.mainPassword);
     }
 
     public void goRegistration(View view) {

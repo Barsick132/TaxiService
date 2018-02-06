@@ -18,7 +18,7 @@
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView26"
+                android:id="@+id/cardsHeader"
                 android:background="@color/colorHeaderWindow"
         />
         <LinearLayout android:layout_width="match_parent"
@@ -29,7 +29,7 @@
                     android:text="MasterCard••••1011\n04/21"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView25"
+                    android:id="@+id/cardsCardInfo1"
                     android:textSize="24sp"
                     android:paddingTop="5dp"
                     android:paddingStart="16dp"

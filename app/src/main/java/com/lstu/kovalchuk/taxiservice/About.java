@@ -16,10 +16,10 @@ public class About extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
-        TextView versionString = (TextView)findViewById(R.id.textView15);
+        TextView versionString = (TextView)findViewById(R.id.aboutText5);
         versionString.setText(BuildConfig.VERSION_NAME);
 
-        TextView yandexMapsInfo = (TextView)findViewById(R.id.textView17);
+        TextView yandexMapsInfo = (TextView)findViewById(R.id.aboutText7);
         if (Build.VERSION.SDK_INT >= 24)
         {
             yandexMapsInfo.setText(Html.fromHtml(getString(R.string.termsOfUseYandexMapsInfo), 1));

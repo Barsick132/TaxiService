@@ -12,19 +12,26 @@ import android.widget.TextView;
 
 public class Ordering extends AppCompatActivity {
 
-    EditText etWhence = (EditText)findViewById(R.id.editText8);
-    EditText etEntranceWhence = (EditText)findViewById(R.id.editText8);
-    EditText etWhere = (EditText)findViewById(R.id.editText10);
-    EditText etEntranceWhere = (EditText)findViewById(R.id.editText8);
-    TextView tvApproxCost = (TextView)findViewById(R.id.textView);
-    EditText etComment = (EditText)findViewById(R.id.editText11);
+    private EditText etWhence;
+    private EditText etEntranceWhence;
+    private EditText etWhere;
+    private EditText etEntranceWhere;
+    private TextView tvApproxCost;
+    private EditText etComment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ordering);
 
-        Spinner spin = (Spinner) findViewById(R.id.spinner_list);
+        etWhence = (EditText)findViewById(R.id.orderingWhence1);
+        etEntranceWhence = (EditText)findViewById(R.id.orderingWhence2);
+        etWhere = (EditText)findViewById(R.id.orderingWhere1);
+        etEntranceWhere = (EditText)findViewById(R.id.orderingWhere2);
+        tvApproxCost = (TextView)findViewById(R.id.orderingCost);
+        etComment = (EditText)findViewById(R.id.orderingComment);
+
+        Spinner spin = (Spinner) findViewById(R.id.orderingSpinnerList);
 
         ArrayAdapter<String> namesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.spinner_array));
 

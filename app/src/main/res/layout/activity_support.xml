@@ -12,7 +12,7 @@
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
             android:ems="10"
-            android:id="@+id/editText13"
+            android:id="@+id/supportEmail"
             android:layout_weight="0"
     />
     <LinearLayout android:layout_width="match_parent"
@@ -30,7 +30,7 @@
                 android:inputType="textMultiLine"
                 android:padding="5dp"
                 android:ems="10"
-                android:id="@+id/editText12"
+                android:id="@+id/supportContent"
                 android:background="@color/colorDefault"
         />
     </LinearLayout>
@@ -38,7 +38,7 @@
             android:text="@string/btnSendInquiry"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/button3"
+            android:id="@+id/supportButton"
             android:layout_weight="0"
             android:onClick="sendMessage"
     />

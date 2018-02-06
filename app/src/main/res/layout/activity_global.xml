@@ -14,10 +14,10 @@
             android:background="?attr/colorPrimary"
             android:theme="?attr/actionBarTheme"
             android:minHeight="?attr/actionBarSize"
-            android:id="@+id/toolbar"/>
+            android:id="@+id/globalToolbar1"/>
 
     <ru.yandex.yandexmapkit.MapView
-            android:id="@+id/map"
+            android:id="@+id/globalMap1"
             android:layout_height="0dp"
             android:layout_width="match_parent"
             android:apiKey="WT1goYZNqbPdNBMruaSCPPmR3er4QXd-X9XVg6MR15ATij2rmtpUY-SCHS7gB1z-XHSNb4PlE1WpuljfF9Q5~Kv8JLeuJFp6fQxoLRiB37o="

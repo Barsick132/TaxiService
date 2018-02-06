@@ -11,7 +11,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPostalAddress"
             android:ems="10"
-            android:id="@+id/editText8"
+            android:id="@+id/orderingWhence1"
             android:drawableStart="@drawable/ic_edit_location_black_24dp"
             android:hint="@string/whence"
             android:onClick="openWhence"
@@ -22,7 +22,7 @@
             android:inputType="number"
             android:layout_marginTop="5dp"
             android:ems="10"
-            android:id="@+id/editText9"
+            android:id="@+id/orderingWhence2"
             android:hint="@string/entrance"
             android:layout_marginStart="24dp"
             android:maxLength="2"
@@ -33,7 +33,7 @@
             android:inputType="textPostalAddress"
             android:ems="10"
             android:layout_marginTop="5dp"
-            android:id="@+id/editText10"
+            android:id="@+id/orderingWhere1"
             android:drawableStart="@drawable/ic_edit_location_black_24dp2"
             android:hint="@string/where"
             android:onClick="openWhere"
@@ -44,7 +44,7 @@
             android:inputType="number"
             android:layout_marginTop="5dp"
             android:ems="10"
-            android:id="@+id/editText12"
+            android:id="@+id/orderingWhere2"
             android:hint="@string/entrance"
             android:layout_marginStart="24dp"
             android:maxLength="2"
@@ -52,7 +52,7 @@
     <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/spinner_list"
+            android:id="@+id/orderingSpinnerList"
             android:layout_marginTop="5dp"
     />
     <LinearLayout android:layout_width="match_parent"
@@ -72,7 +72,7 @@
                   android:gravity="center"
                   android:layout_gravity="center"
                   android:layout_weight="1"
-                  android:id="@+id/textView"
+                  android:id="@+id/orderingCost"
                   android:textSize="34sp"
         />
     </LinearLayout>
@@ -89,7 +89,7 @@
                 android:padding="5dp"
                 android:ems="10"
                 android:gravity="start"
-                android:id="@+id/editText11"
+                android:id="@+id/orderingComment"
                 android:hint="@string/comment"
                 android:background="@color/colorDefault"
         />
@@ -99,7 +99,7 @@
             android:text="@string/completeCheckout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/button"
+            android:id="@+id/orderingButton"
             android:layout_marginTop="5dp"
             android:onClick="callTaxi"
     />

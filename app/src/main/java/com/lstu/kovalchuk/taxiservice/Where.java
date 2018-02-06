@@ -9,12 +9,14 @@ import android.widget.EditText;
 
 public class Where extends AppCompatActivity {
 
-    private EditText etWhereAddress = (EditText)findViewById(R.id.editText8);
+    private EditText etWhereAddress;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_where);
+
+        etWhereAddress = (EditText)findViewById(R.id.whereAddress);
     }
 
 
