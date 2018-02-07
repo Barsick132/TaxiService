@@ -12,24 +12,17 @@ import android.widget.TextView;
 
 public class Ordering extends AppCompatActivity {
 
-    private EditText etWhence;
-    private EditText etEntranceWhence;
-    private EditText etWhere;
-    private EditText etEntranceWhere;
-    private TextView tvApproxCost;
-    private EditText etComment;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ordering);
 
-        etWhence = (EditText)findViewById(R.id.orderingWhence1);
-        etEntranceWhence = (EditText)findViewById(R.id.orderingWhence2);
-        etWhere = (EditText)findViewById(R.id.orderingWhere1);
-        etEntranceWhere = (EditText)findViewById(R.id.orderingWhere2);
-        tvApproxCost = (TextView)findViewById(R.id.orderingCost);
-        etComment = (EditText)findViewById(R.id.orderingComment);
+        EditText etWhence = (EditText)findViewById(R.id.orderingWhence1);
+        EditText etEntranceWhence = (EditText)findViewById(R.id.orderingWhence2);
+        EditText etWhere = (EditText)findViewById(R.id.orderingWhere1);
+        EditText etEntranceWhere = (EditText)findViewById(R.id.orderingWhere2);
+        TextView tvApproxCost = (TextView)findViewById(R.id.orderingCost);
+        EditText etComment = (EditText)findViewById(R.id.orderingComment);
 
         Spinner spin = (Spinner) findViewById(R.id.orderingSpinnerList);
 

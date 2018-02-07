@@ -13,8 +13,6 @@ import ru.yandex.yandexmapkit.utils.GeoPoint;
 
 public class Global extends Activity {
 
-    private android.support.v7.widget.Toolbar toolbar;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +33,7 @@ public class Global extends Activity {
     }
 
     private void initToolbar() {
-        toolbar = (android.support.v7.widget.Toolbar)findViewById(R.id.globalToolbar1);
+        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.globalToolbar1);
         toolbar.setOnMenuItemClickListener(new android.support.v7.widget.Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {

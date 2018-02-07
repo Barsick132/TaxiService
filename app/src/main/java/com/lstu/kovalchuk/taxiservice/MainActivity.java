@@ -8,16 +8,13 @@ import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity{
 
-    private EditText etPhone;
-    private EditText etPassword;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        etPhone = (EditText)findViewById(R.id.mainPhone);
-        etPassword = (EditText)findViewById(R.id.mainPassword);
+        EditText etPhone = (EditText) findViewById(R.id.mainPhone);
+        EditText etPassword = (EditText) findViewById(R.id.mainPassword);
     }
 
     public void goRegistration(View view) {

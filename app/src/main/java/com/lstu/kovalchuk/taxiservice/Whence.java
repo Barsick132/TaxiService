@@ -9,14 +9,12 @@ import android.widget.EditText;
 
 public class Whence extends AppCompatActivity {
 
-    private EditText etWhenceAddress;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_whence);
 
-        etWhenceAddress = (EditText)findViewById(R.id.whenceAddress);
+        EditText etWhenceAddress = (EditText) findViewById(R.id.whenceAddress);
     }
 
 

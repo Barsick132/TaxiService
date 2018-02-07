@@ -8,27 +8,18 @@ import android.widget.EditText;
 
 public class Profile extends AppCompatActivity {
 
-    private DataProfile dataProfile;
-    private EditText etFirstName ;
-    private EditText etLastName ;
-    private EditText etPatronymic;
-    private EditText etPhone;
-    private EditText etPassword;
-    private EditText etConfirmPassword;
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        dataProfile = new DataProfile();
-        etFirstName = (EditText)findViewById(R.id.profileName);
-        etLastName = (EditText)findViewById(R.id.profileFamily);
-        etPatronymic = (EditText)findViewById(R.id.profilePatronymic);
-        etPhone = (EditText)findViewById(R.id.profilePhone);
-        etPassword = (EditText)findViewById(R.id.profilePass1);
-        etConfirmPassword = (EditText)findViewById(R.id.profilePass2);
+        DataProfile dataProfile = new DataProfile();
+        EditText etFirstName = (EditText)findViewById(R.id.profileName);
+        EditText etLastName = (EditText)findViewById(R.id.profileFamily);
+        EditText etPatronymic = (EditText)findViewById(R.id.profilePatronymic);
+        EditText etPhone = (EditText)findViewById(R.id.profilePhone);
+        EditText etPassword = (EditText)findViewById(R.id.profilePass1);
+        EditText etConfirmPassword = (EditText)findViewById(R.id.profilePass2);
     }
 
     public void saveDataProfile(View view) {

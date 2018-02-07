@@ -12,7 +12,6 @@ import ru.yandex.yandexmapkit.utils.GeoPoint;
 
 public class Waiting extends AppCompatActivity {
 
-    private android.support.v7.widget.Toolbar toolbar;
     private DriverGPS driverGPS;
 
     @Override
@@ -35,7 +34,7 @@ public class Waiting extends AppCompatActivity {
     }
 
     private void initToolbar() {
-        toolbar = (android.support.v7.widget.Toolbar)findViewById(R.id.WaitingToolbar);
+        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.WaitingToolbar);
         toolbar.setOnMenuItemClickListener(new android.support.v7.widget.Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
