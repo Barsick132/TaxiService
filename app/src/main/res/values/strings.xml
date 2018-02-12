@@ -2,9 +2,9 @@
     <string name="app_name">Taxi Service</string>
     <string name="mark_on_map">Отметить на карте</string>
     <string name="menu">Меню</string>
-
     //System
     <string name="logo">LOGO</string>
+    <string name="HOST_ADDRESS">192.168.0.3/taxiservice</string> //ВАЖНО! АДРЕС ХОСТА
 
     //Main
     <string name="phone">Телефон</string>

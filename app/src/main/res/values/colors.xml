@@ -6,4 +6,5 @@
     <color name="colorDefault">#fafafa</color>
     <color name="colorBlack">#000000</color>
     <color name="colorHeaderWindow">#d6d7d7</color>
+    <color name="colorRed">#de191c</color>
 </resources>

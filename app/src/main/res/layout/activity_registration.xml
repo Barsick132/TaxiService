@@ -7,6 +7,12 @@
               android:background="@color/colorDefault"
 >
 
+    <TextView android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="start"
+              android:textColor="@color/colorRed"
+              android:id="@+id/regTextErrors"
+    />
     <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -14,7 +20,8 @@
             android:ems="10"
             android:id="@+id/regPhone"
             android:hint="@string/phone"
-            android:drawableStart="@drawable/ic_phone_black_24dp">
+            android:drawableStart="@drawable/ic_phone_black_24dp"
+    >
     </EditText>
     <EditText
             android:layout_width="match_parent"
