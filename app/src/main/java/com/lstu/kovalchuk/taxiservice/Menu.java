@@ -5,7 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.TextView;
+
+import com.firebase.ui.auth.AuthUI;
 
 public class Menu extends AppCompatActivity {
     @Override
@@ -35,5 +36,17 @@ public class Menu extends AppCompatActivity {
     public void openAbout(View view) {
         Intent intent = new Intent(this, About.class);
         startActivity(intent);
+    }
+
+    public void signOut(View view) {
+        AuthUI.getInstance()
+                .signOut(this)
+                .addOnCompleteListener(task -> {
+                    Intent intent = new Intent(this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                });
     }
 }

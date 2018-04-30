@@ -26,7 +26,7 @@ public class Ordering extends AppCompatActivity {
 
         Spinner spin = (Spinner) findViewById(R.id.orderingSpinnerList);
 
-        ArrayAdapter<String> namesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.spinner_array));
+        ArrayAdapter<String> namesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.spinner_array));
 
         namesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spin.setAdapter(namesAdapter);

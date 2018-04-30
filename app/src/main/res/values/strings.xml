@@ -11,12 +11,18 @@
     <string name="password">Пароль</string>
     <string name="signIn">Войти</string>
     <string name="registration">Регистрация</string>
+    <string name="confirm">Подтвердить</string>
 
     //Registration
+    <string name="fullName">Фамилия Имя</string>
     <string name="lastName">Фамилия</string>
     <string name="firstName">Имя</string>
     <string name="confirmPass">Повторите пароль</string>
     <string name="toRegister">Зарегистрироваться</string>
+    <string name="getConfirmCode">Получить код</string>
+    <string name="VerifyPhone">Подтвердить</string>
+    <string name="VerifyCode">Код верификации</string>
+    <string name="RenderCode">Отправить код повторно</string>
 
     //Global
     <string name="checkout">Оформить заказ</string>
@@ -47,6 +53,7 @@
     <string name="bankCards">Банковские карты</string>
     <string name="supportService">Служба поддержки</string>
     <string name="aboutProgram">О программе</string>
+    <string name="signOut">Выход</string>
 
     //Support
     <string name="contentMesseg">Опишите возникшую проблему</string>

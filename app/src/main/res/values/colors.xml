@@ -7,4 +7,5 @@
     <color name="colorBlack">#000000</color>
     <color name="colorHeaderWindow">#d6d7d7</color>
     <color name="colorRed">#de191c</color>
+    <color name="colorWhite">#ffffff</color>
 </resources>

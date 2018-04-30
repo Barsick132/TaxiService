@@ -1,7 +1,5 @@
 package com.lstu.kovalchuk.taxiservice;
 
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,15 +14,13 @@ public class About extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
-        TextView versionString = (TextView)findViewById(R.id.aboutText5);
+        TextView versionString = (TextView) findViewById(R.id.aboutText5);
         versionString.setText(BuildConfig.VERSION_NAME);
 
-        TextView yandexMapsInfo = (TextView)findViewById(R.id.aboutText7);
-        if (Build.VERSION.SDK_INT >= 24)
-        {
+        TextView yandexMapsInfo = (TextView) findViewById(R.id.aboutText7);
+        if (Build.VERSION.SDK_INT >= 24) {
             yandexMapsInfo.setText(Html.fromHtml(getString(R.string.termsOfUseYandexMapsInfo), 1));
-        }
-        else {
+        } else {
             yandexMapsInfo.setText(Html.fromHtml(getString(R.string.termsOfUseYandexMapsInfo)));
         }
 

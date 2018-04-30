@@ -6,9 +6,11 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+/*
 import ru.yandex.yandexmapkit.MapController;
 import ru.yandex.yandexmapkit.MapView;
 import ru.yandex.yandexmapkit.utils.GeoPoint;
+*/
 
 public class Waiting extends AppCompatActivity {
 
@@ -19,6 +21,7 @@ public class Waiting extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_waiting);
 
+        /*
         final MapView mMapView = (MapView) findViewById(R.id.WaitingMap);
 
 // Получаем MapController
@@ -29,18 +32,14 @@ public class Waiting extends AppCompatActivity {
         mMapController.setPositionAnimationTo(new GeoPoint(52.583556, 39.476184));
 
         mMapView.showZoomButtons(true);
+        */
 
         initToolbar();
     }
 
     private void initToolbar() {
-        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.WaitingToolbar);
-        toolbar.setOnMenuItemClickListener(new android.support.v7.widget.Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                return false;
-            }
-        });
+        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.WaitingToolbar);
+        toolbar.setOnMenuItemClickListener(menuItem -> false);
 
         toolbar.inflateMenu(R.menu.menu);
     }

@@ -1,70 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/colorDefault"
->
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="0dp"
-                  android:layout_weight="1"
-                  android:orientation="vertical"
-                  android:gravity="center"
-    >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorDefault"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
         <TextView
-                android:text="@string/assesment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="35sp"
-                android:textColor="@color/colorAccent"
-                android:id="@+id/assessmentText1"
-                android:gravity="center"
-        />
-        <LinearLayout android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:orientation="horizontal"
-                      android:gravity="center"
-        >
+            android:id="@+id/assessmentText1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/assesment"
+            android:textColor="@color/colorAccent"
+            android:textSize="35sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
             <TextView
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:id="@+id/assessmentStar1"
-                    android:background="@drawable/ic_star_black_24dp"
-                    android:onClick="star1"
-            />
+                android:id="@+id/assessmentStar1"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/ic_star_black_24dp"
+                android:onClick="star1" />
+
             <TextView
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:id="@+id/assessmentStar2"
-                    android:background="@drawable/ic_star_black_24dp"
-                    android:onClick="star2"
-            />
+                android:id="@+id/assessmentStar2"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/ic_star_black_24dp"
+                android:onClick="star2" />
+
             <TextView
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:id="@+id/assessmentStar3"
-                    android:background="@drawable/ic_star_black_24dp"
-                    android:onClick="star3"
-            />
+                android:id="@+id/assessmentStar3"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/ic_star_black_24dp"
+                android:onClick="star3" />
+
             <TextView
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:id="@+id/assessmentStar4"
-                    android:background="@drawable/ic_star_half_black_24dp"
-                    android:onClick="star4"
-            />
+                android:id="@+id/assessmentStar4"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/ic_star_half_black_24dp"
+                android:onClick="star4" />
+
             <TextView
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:id="@+id/assessmentStar5"
-                    android:background="@drawable/ic_star_border_black_24dp"
-                    android:onClick="star5"
-            />
+                android:id="@+id/assessmentStar5"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/ic_star_border_black_24dp"
+                android:onClick="star5" />
         </LinearLayout>
     </LinearLayout>
-    <Button android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/save"
-            android:onClick="saveAssessment"
-    />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorAccent"
+        android:onClick="saveAssessment"
+        android:text="@string/save"
+        android:textColor="@color/colorWhite" />
 </LinearLayout>

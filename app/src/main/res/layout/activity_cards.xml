@@ -1,49 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/colorDefault"
->
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="0dp"
-                  android:orientation="vertical"
-                  android:layout_weight="1">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorDefault"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
         <TextView
-                android:text="@string/bankCards"
-                android:textSize="30sp"
-                android:textColor="@color/colorAccent"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
-                android:gravity="center"
+            android:id="@+id/cardsHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorHeaderWindow"
+            android:gravity="center"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp"
+            android:text="@string/bankCards"
+            android:textColor="@color/colorAccent"
+            android:textSize="30sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorBlack">
+
+            <TextView
+                android:id="@+id/cardsCardInfo1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/cardsHeader"
-                android:background="@color/colorHeaderWindow"
-        />
-        <LinearLayout android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:background="@color/colorBlack"
-        >
-            <TextView
-                    android:text="MasterCard••••1011\n04/21"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/cardsCardInfo1"
-                    android:textSize="24sp"
-                    android:paddingTop="5dp"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:paddingBottom="5dp"
-                    android:background="@color/colorDefault"
-                    android:layout_marginTop="1dp"
-                    android:layout_marginBottom="1dp"
-            />
+                android:layout_marginBottom="1dp"
+                android:layout_marginTop="1dp"
+                android:background="@color/colorDefault"
+                android:paddingBottom="5dp"
+                android:paddingEnd="16dp"
+                android:paddingStart="16dp"
+                android:paddingTop="5dp"
+                android:text="MasterCard••••1011\n04/21"
+                android:textSize="24sp" />
         </LinearLayout>
     </LinearLayout>
-    <Button android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/addCard"
-            android:onClick="addCard"
-    />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorAccent"
+        android:onClick="addCard"
+        android:text="@string/addCard"
+        android:textColor="@color/colorWhite" />
 </LinearLayout>

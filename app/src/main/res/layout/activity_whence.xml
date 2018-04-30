@@ -1,145 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:padding="16dp"
-              android:background="@color/colorDefault"
->
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorDefault"
+    android:orientation="vertical"
+    android:padding="16dp">
 
-        <EditText
-                android:text="Стаханова 13"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPostalAddress"
-                android:ems="10"
-                android:id="@+id/whenceAddress"
-                android:drawableStart="@drawable/ic_edit_location_black_24dp"
-                android:hint="@string/whence"/>
+    <EditText
+        android:id="@+id/whenceAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_edit_location_black_24dp"
+        android:ems="10"
+        android:hint="@string/whence"
+        android:inputType="textPostalAddress"
+        android:text="Стаханова 13" />
+
     <Button
-            android:layout_marginTop="5dp"
-            android:text="@string/mark_on_map"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:backgroundTint="@color/colorAccent"
+        android:onClick="checkWhenceToMap"
+        android:text="@string/mark_on_map"
+        android:textColor="@color/colorWhite" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="checkWhenceToMap"
-    />
-    <ScrollView android:layout_width="match_parent" android:layout_height="match_parent">
-        <LinearLayout android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:orientation="vertical"
-        >
-            <LinearLayout android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:orientation="vertical"
-            >
-                <TextView android:text="улица Стаханова, 13"
-                          android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:textSize="18sp"
-                          android:paddingTop="10dp"
-                          android:textColor="@color/colorBlack"
-                />
-                <TextView android:text="Липецк, Россия"
-                          android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:paddingBottom="10dp"
-                />
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:text="улица Стаханова, 13"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:text="Липецк, Россия" />
             </LinearLayout>
-            <View android:layout_width="match_parent"
-                  android:layout_height="1dp"
-                  android:background="@color/colorBlack"
-            >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorBlack">
 
             </View>
 
-            <LinearLayout android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:orientation="vertical"
-            >
-                <TextView android:text="Московская улица, 13А"
-                          android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:textSize="18sp"
-                          android:paddingTop="10dp"
-                          android:textColor="@color/colorBlack"
-                />
-                <TextView android:text="Липецк, Россия"
-                          android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:paddingBottom="10dp"
-                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:text="Московская улица, 13А"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:text="Липецк, Россия" />
             </LinearLayout>
-            <View android:layout_width="match_parent"
-                  android:layout_height="1dp"
-                  android:background="@color/colorBlack"
-            >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorBlack">
 
             </View>
 
-            <LinearLayout android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:orientation="vertical"
-            >
-                <TextView android:text="Отдел полиции №7 УМВД Российской Федерации по городу Липецку"
-                          android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:textSize="18sp"
-                          android:paddingTop="10dp"
-                          android:textColor="@color/colorBlack"
-                />
-                <TextView android:text="Отделение полиции • улица Стаханова, 13А"
-                          android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:paddingBottom="10dp"
-                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:text="Отдел полиции №7 УМВД Российской Федерации по городу Липецку"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:text="Отделение полиции • улица Стаханова, 13А" />
             </LinearLayout>
-            <View android:layout_width="match_parent"
-                  android:layout_height="1dp"
-                  android:background="@color/colorBlack"
-            >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorBlack">
 
             </View>
 
-            <LinearLayout android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:orientation="vertical"
-            >
-                <TextView android:text="улица Стаханова, 13"
-                          android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:textSize="18sp"
-                          android:paddingTop="10dp"
-                          android:textColor="@color/colorBlack"
-                />
-                <TextView android:text="село Митрофановка, Кантемировский район, Воронежская область, Россия"
-                          android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:paddingBottom="10dp"
-                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:text="улица Стаханова, 13"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:text="село Митрофановка, Кантемировский район, Воронежская область, Россия" />
             </LinearLayout>
-            <View android:layout_width="match_parent"
-                  android:layout_height="1dp"
-                  android:background="@color/colorBlack"
-            >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorBlack">
 
             </View>
 
-            <LinearLayout android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:orientation="vertical"
-            >
-                <TextView android:text="улица Стаханова, 13"
-                          android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:textSize="18sp"
-                          android:paddingTop="10dp"
-                          android:textColor="@color/colorBlack"
-                />
-                <TextView android:text="Сызрань, Самарская область, Россия"
-                          android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:paddingBottom="10dp"
-                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:text="улица Стаханова, 13"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:text="Сызрань, Самарская область, Россия" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

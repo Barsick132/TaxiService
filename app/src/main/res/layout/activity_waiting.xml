@@ -1,46 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/colorDefault"
->
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorDefault"
+    android:orientation="vertical">
+
     <android.support.v7.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:theme="?attr/actionBarTheme"
-            android:minHeight="?attr/actionBarSize"
-            android:id="@+id/WaitingToolbar"/>
+        android:id="@+id/WaitingToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" />
+
+    <!--
     <ru.yandex.yandexmapkit.MapView
-            android:id="@+id/WaitingMap"
-            android:layout_height="0dp"
+        android:id="@+id/WaitingMap"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:apiKey="WT1goYZNqbPdNBMruaSCPPmR3er4QXd-X9XVg6MR15ATij2rmtpUY-SCHS7gB1z-XHSNb4PlE1WpuljfF9Q5~Kv8JLeuJFp6fQxoLRiB37o=" />
+        -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="match_parent"
-            android:apiKey="WT1goYZNqbPdNBMruaSCPPmR3er4QXd-X9XVg6MR15ATij2rmtpUY-SCHS7gB1z-XHSNb4PlE1WpuljfF9Q5~Kv8JLeuJFp6fQxoLRiB37o="
-            android:layout_weight="1"
-    />
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="horizontal"
-    >
-        <Button android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/annulment"
-                android:layout_weight="1"
-                android:onClick="closeOrder"
-                style="?android:attr/buttonBarButtonStyle"
-        />
-        <Button android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/calling"
-                android:layout_weight="1"
-                android:onClick="openPhoneKeyboard"
-                style="?android:attr/buttonBarButtonStyle"
-        />
-    </LinearLayout>
-    <Button android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/detailOrder"
-            android:onClick="openDetailOrder"
-    />
+            android:layout_weight="1"
+            android:onClick="closeOrder"
+            android:text="@string/annulment" />
+
+        <Button
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="openPhoneKeyboard"
+            android:text="@string/calling" />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorAccent"
+        android:onClick="openDetailOrder"
+        android:text="@string/detailOrder"
+        android:textColor="@color/colorWhite" />
 </LinearLayout>

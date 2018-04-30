@@ -1,103 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:padding="16dp"
-              android:layout_weight="1"
-              android:background="@color/colorDefault"
->
-    <LinearLayout android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:layout_weight="1"
-                  android:orientation="vertical"
-    >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_weight="1"
+    android:background="@color/colorDefault"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
         <TextView
-                android:text="@string/firstName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/profileNameHeader"/>
-        <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/profileName"
-                android:hint="@string/enterYourFirstName"
-                android:text="Антон"/>
-        <TextView
-                android:text="@string/lastName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/profileFamilyHeader"/>
-        <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/profileFamily"
-                android:hint="@string/enterYourLastName"
-                android:text="Ковальчук"/>
-        <TextView
-                android:text="@string/patronymic"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/profilePatronymicHeader"/>
-        <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/profilePatronymic"
-                android:hint="@string/enterYourPatronymic"
-                android:text="Дмитриевич"/>
-        <TextView
-                android:text="@string/phone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/profilePhoneHeader"/>
-        <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="phone"
-                android:ems="10"
-                android:id="@+id/profilePhone"
-                android:hint="@string/enterYourPhone"
-                android:text="+7(999)888&#8211;7777"
-        />
-        <TextView
-                android:text="@string/password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/profilePassHeader1"/>
-        <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:ems="10"
-                android:id="@+id/profilePass1"
-                android:hint="@string/enterYourNewPass"
-        />
-        <TextView
-                android:text="@string/confirmPass"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/profilePassHeader2"/>
-        <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:ems="10"
-                android:id="@+id/profilePass2"
-                android:hint="@string/enterYourNewConfirmPass"
-        />
-    </LinearLayout>
-    <Button
-            android:layout_gravity="bottom"
-            android:text="@string/save"
+            android:id="@+id/profileNameHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/profileButton"
-            android:onClick="saveDataProfile"
-    />
+            android:text="@string/firstName" />
+
+        <EditText
+            android:id="@+id/profileName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/enterYourFirstName"
+            android:inputType="textPersonName"
+            android:text="Антон" />
+
+        <TextView
+            android:id="@+id/profileFamilyHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/lastName" />
+
+        <EditText
+            android:id="@+id/profileFamily"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/enterYourLastName"
+            android:inputType="textPersonName"
+            android:text="Ковальчук" />
+
+        <TextView
+            android:id="@+id/profilePatronymicHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/patronymic" />
+
+        <EditText
+            android:id="@+id/profilePatronymic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/enterYourPatronymic"
+            android:inputType="textPersonName"
+            android:text="Дмитриевич" />
+
+        <TextView
+            android:id="@+id/profilePhoneHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/phone" />
+
+        <EditText
+            android:id="@+id/profilePhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/enterYourPhone"
+            android:inputType="phone"
+            android:text="+7(999)888&#8211;7777" />
+
+        <TextView
+            android:id="@+id/profilePassHeader1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/password" />
+
+        <EditText
+            android:id="@+id/profilePass1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/enterYourNewPass"
+            android:inputType="textPassword" />
+
+        <TextView
+            android:id="@+id/profilePassHeader2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/confirmPass" />
+
+        <EditText
+            android:id="@+id/profilePass2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/enterYourNewConfirmPass"
+            android:inputType="textPassword" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/profileButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:backgroundTint="@color/colorAccent"
+        android:onClick="saveDataProfile"
+        android:text="@string/save"
+        android:textColor="@color/colorWhite" />
 </LinearLayout>
