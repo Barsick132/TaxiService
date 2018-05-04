@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorDefault"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -25,12 +24,11 @@
 
     <Button
         android:id="@+id/mainBtnConfirm"
+        style="@style/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="5dp"
-        android:backgroundTint="@color/colorAccent"
         android:onClick="mainToConfirm"
-        android:text="@string/confirm"
-        android:textColor="@color/colorWhite" />
+        android:text="@string/confirm" />
 </LinearLayout>

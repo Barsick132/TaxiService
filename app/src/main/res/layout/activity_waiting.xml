@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorDefault"
     android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
@@ -13,6 +12,11 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme" />
 
+    <com.yandex.mapkit.mapview.MapView
+        android:id="@+id/WaitingMap"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
     <!--
     <ru.yandex.yandexmapkit.MapView
         android:id="@+id/WaitingMap"
@@ -44,10 +48,9 @@
     </LinearLayout>
 
     <Button
+        style="@style/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorAccent"
         android:onClick="openDetailOrder"
-        android:text="@string/detailOrder"
-        android:textColor="@color/colorWhite" />
+        android:text="@string/detailOrder" />
 </LinearLayout>

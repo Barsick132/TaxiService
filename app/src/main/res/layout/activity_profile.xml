@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="1"
-    android:background="@color/colorDefault"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -104,11 +103,10 @@
 
     <Button
         android:id="@+id/profileButton"
+        style="@style/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:backgroundTint="@color/colorAccent"
         android:onClick="saveDataProfile"
-        android:text="@string/save"
-        android:textColor="@color/colorWhite" />
+        android:text="@string/save" />
 </LinearLayout>

@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorDefault"
     android:orientation="vertical">
 
     <LinearLayout
@@ -65,10 +64,9 @@
     </LinearLayout>
 
     <Button
+        style="@style/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/colorAccent"
         android:onClick="saveAssessment"
-        android:text="@string/save"
-        android:textColor="@color/colorWhite" />
+        android:text="@string/save" />
 </LinearLayout>
