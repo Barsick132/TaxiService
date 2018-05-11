@@ -9,6 +9,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        resValue "string", "google_maps_key",
+                (project.findProperty("GOOGLE_MAPS_API_KEY") ?: "")
     }
     buildToolsVersion '27.0.3'
     buildTypes {
@@ -24,6 +26,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.google.android.gms:play-services-maps:15.0.1'
     implementation 'com.yandex.android:mapkit:3.0.0'
     // Библиотеки Firebase
     implementation 'com.firebaseui:firebase-ui-auth:3.3.1'

@@ -88,6 +88,7 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/assets" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/blame" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/build-info" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/builds" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/check-manifest" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/classes" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental" />
@@ -177,6 +178,7 @@
     <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-appinvite-15.0.2" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-analytics-impl-15.0.2" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:firebase-core-15.0.2" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.android.gms:play-services-maps-15.0.1" level="project" />
     <orderEntry type="library" name="Gradle: android.arch.lifecycle:livedata-core-1.1.0" level="project" />
     <orderEntry type="library" name="Gradle: com.firebaseui:firebase-ui-auth-3.3.1" level="project" />
     <orderEntry type="library" name="Gradle: com.google.firebase:protolite-well-known-types-15.0.0" level="project" />
