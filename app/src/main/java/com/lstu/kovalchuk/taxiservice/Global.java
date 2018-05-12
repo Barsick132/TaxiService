@@ -1,10 +1,6 @@
 package com.lstu.kovalchuk.taxiservice;
 
 import android.Manifest;
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -13,7 +9,6 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -24,31 +19,17 @@ import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.yandex.mapkit.Animation;
-import com.yandex.mapkit.MapKitFactory;
-import com.yandex.mapkit.geometry.Point;
-import com.yandex.mapkit.map.CameraPosition;
-import com.yandex.mapkit.mapview.MapView;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
-
-/*
-import ru.yandex.yandexmapkit.MapController;
-import ru.yandex.yandexmapkit.MapView;
-import ru.yandex.yandexmapkit.utils.GeoPoint;
-*/
 
 public class Global extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -71,8 +52,6 @@ public class Global extends AppCompatActivity implements OnMapReadyCallback {
         }
     }
 
-    //private MapView mapview;
-
     private static final String TAG = "GlobalActivity";
     public static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     public static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
@@ -84,21 +63,15 @@ public class Global extends AppCompatActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private TextView tvAddress;
+    private Location currentLocation;
+    private Address whenceAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //MapKitFactory.setApiKey("ce22acd0-3f1a-4e4b-bb04-293ac4af654a");
-        //MapKitFactory.initialize(this);
-
         setContentView(R.layout.activity_global);
+
         tvAddress = findViewById(R.id.globalAddress);
-        //mapview = (MapView)findViewById(R.id.globalMap);
-        //mapview.getMap().move(
-        //        new CameraPosition(new Point(55.751574, 37.573856), 11.0f, 0.0f, 0.0f),
-        //        new Animation(Animation.Type.SMOOTH, 0),
-        //        null);
 
         getLocationPermission();
 
@@ -120,12 +93,22 @@ public class Global extends AppCompatActivity implements OnMapReadyCallback {
 
         if(addressList.size()>0 && addressList.get(0).getThoroughfare()!=null){
             Address address =  addressList.get(0);
-            String street = address.getThoroughfare().replace("улица", "ул.");
+            String street = address.getThoroughfare();
+
+            Pattern pattern = Pattern.compile("^улица\\b.+");
+            if(pattern.matcher(street).matches()) {
+                street = street.replace("улица ", "ул. ");
+            }
+            pattern = Pattern.compile(".+\\bулица$");
+            if (pattern.matcher(street).matches()){
+                street = street.replace(" улица", " ул.");
+            }
 
             if(address.getSubThoroughfare()!=null)
             {
                 street += ", " + address.getSubThoroughfare();
             }
+            whenceAddress = address;
             tvAddress.setText(street);
         }
     }
@@ -142,7 +125,7 @@ public class Global extends AppCompatActivity implements OnMapReadyCallback {
                     if(task.isSuccessful())
                     {
                         Log.d(TAG, "onComplete: found location!");
-                        Location currentLocation = (Location) task.getResult();
+                        currentLocation = (Location) task.getResult();
 
                         moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
                     }
@@ -214,20 +197,6 @@ public class Global extends AppCompatActivity implements OnMapReadyCallback {
         }
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        //mapview.onStop();
-        //MapKitFactory.getInstance().onStop();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        //mapview.onStart();
-        //MapKitFactory.getInstance().onStart();
-    }
-
     private void initToolbar() {
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.globalToolbar1);
         toolbar.setOnMenuItemClickListener(menuItem -> false);
@@ -236,8 +205,15 @@ public class Global extends AppCompatActivity implements OnMapReadyCallback {
     }
 
     public void checkout(View view) {
-        Intent intent = new Intent(this, Where.class);
-        startActivity(intent);
+        if(mLocationPermissionGranted) {
+            Intent intent = new Intent(this, Where.class);
+            intent.putExtra("CurrentLocation", currentLocation);
+            intent.putExtra("WhenceAddress", whenceAddress);
+            startActivity(intent);
+        }
+        else {
+            Toast.makeText(this, "Включите геолокацию", Toast.LENGTH_LONG).show();
+        }
     }
 
     public void openMenu(MenuItem item) {

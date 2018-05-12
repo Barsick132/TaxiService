@@ -1,6 +1,8 @@
 package com.lstu.kovalchuk.taxiservice;
 
 import android.content.Intent;
+import android.location.Address;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +13,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 public class Ordering extends AppCompatActivity {
+
+    private Location currentLocation;
+    private Address whenceAddress;
+    private Address whereAddress;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,6 +36,13 @@ public class Ordering extends AppCompatActivity {
 
         namesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spin.setAdapter(namesAdapter);
+
+        Bundle arguments = getIntent().getExtras();
+        if(arguments!=null){
+            currentLocation = (Location) arguments.get("CurrentLocation");
+            whenceAddress = (Address) arguments.get("WhenceAddress");
+            whereAddress = (Address) arguments.get("WhereAddress");
+        }
     }
 
     public void callTaxi(View view) {
