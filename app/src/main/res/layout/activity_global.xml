@@ -27,7 +27,7 @@
             tools:context="com.lstu.kovalchuk.taxiservice.Global"/>
 
         <TextView
-            android:id="@+id/globalAddress"
+            android:id="@+id/globalTVAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
@@ -58,6 +58,7 @@
         android:layout_weight="1" />-->
 
     <Button
+        android:id="@+id/globalButton"
         style="@style/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

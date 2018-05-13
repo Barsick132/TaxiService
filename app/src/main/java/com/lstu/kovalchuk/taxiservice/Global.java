@@ -11,9 +11,11 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,113 +65,125 @@ public class Global extends AppCompatActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private TextView tvAddress;
+    private Toolbar toolbar;
+    private Button btnGlobal;
     private Location currentLocation;
-    private Address whenceAddress;
+    private Address globalAddress;
+    private String checkPlace = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_global);
 
-        tvAddress = findViewById(R.id.globalAddress);
+        toolbar = findViewById(R.id.globalToolbar1);
+        btnGlobal = findViewById(R.id.globalButton);
+        tvAddress = findViewById(R.id.globalTVAddress);
 
         getLocationPermission();
 
         initToolbar();
+
+        Bundle arguments = getIntent().getExtras();
+        if (arguments != null) {
+            if(arguments.getString("CheckPlace")!=null){
+                checkPlace = arguments.getString("CheckPlace");
+                updateUI();
+            }
+        }
     }
 
-    private void showAddress()
-    {
+    private void updateUI() {
+        toolbar.setVisibility(View.GONE);
+        btnGlobal.setText("Подтвердить");
+    }
+
+    private void showAddress() {
         Log.d(TAG, "showAddress: show address map center position");
 
         List<Address> addressList = new ArrayList<>();
         Geocoder geocoder = new Geocoder(Global.this);
         try {
             addressList = geocoder.getFromLocation(mMap.getCameraPosition().target.latitude, mMap.getCameraPosition().target.longitude, 1);
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             Log.e(TAG, "showAddress: IOException: " + e.getMessage());
         }
 
-        if(addressList.size()>0 && addressList.get(0).getThoroughfare()!=null){
-            Address address =  addressList.get(0);
+        if (addressList.size() > 0 && addressList.get(0).getThoroughfare() != null) {
+            Address address = addressList.get(0);
             String street = address.getThoroughfare();
 
             Pattern pattern = Pattern.compile("^улица\\b.+");
-            if(pattern.matcher(street).matches()) {
+            if (pattern.matcher(street).matches()) {
                 street = street.replace("улица ", "ул. ");
             }
             pattern = Pattern.compile(".+\\bулица$");
-            if (pattern.matcher(street).matches()){
+            if (pattern.matcher(street).matches()) {
                 street = street.replace(" улица", " ул.");
             }
 
-            if(address.getSubThoroughfare()!=null)
-            {
+            if (address.getSubThoroughfare() != null) {
                 street += ", " + address.getSubThoroughfare();
             }
-            whenceAddress = address;
+            globalAddress = address;
             tvAddress.setText(street);
         }
     }
 
-    private void getDeviceLocation(){
+    private void getDeviceLocation() {
         Log.d(TAG, "getDeviceLocation: getting the devices current location");
 
-        mFusedLocationProviderClient =LocationServices.getFusedLocationProviderClient(this);
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
-        try{
-            if(mLocationPermissionGranted){
+        try {
+            if (mLocationPermissionGranted) {
                 Task location = mFusedLocationProviderClient.getLastLocation();
                 location.addOnCompleteListener(task -> {
-                    if(task.isSuccessful())
-                    {
+                    if (task.isSuccessful()) {
                         Log.d(TAG, "onComplete: found location!");
                         currentLocation = (Location) task.getResult();
 
                         moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
-                    }
-                    else {
+                        showAddress();
+                    } else {
                         Log.d(TAG, "onComplete: current location is null");
                         Toast.makeText(Global.this, "Не удалось определить текущее местоположение", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
-        }catch (SecurityException e){
+        } catch (SecurityException e) {
             Log.e(TAG, "getDeviceLocation: SecurityException: " + e.getMessage());
         }
     }
 
-    private void moveCamera(LatLng latLng, float zoom)
-    {
+    private void moveCamera(LatLng latLng, float zoom) {
         Log.d(TAG, "moveCamera: moving the camera to: lat: " + latLng.latitude + ", lng: " + latLng.longitude);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
     }
 
-    private void initMap()
-    {
+    private void initMap() {
         Log.d(TAG, "initMap: initializing map");
-        SupportMapFragment mapFragment = (SupportMapFragment)getSupportFragmentManager()
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.globalMap);
         mapFragment.getMapAsync(Global.this);
     }
 
-    private void getLocationPermission(){
+    private void getLocationPermission() {
         Log.d(TAG, "getLocationPermission: getting location permissions");
-        String[] permission ={FINE_LOCATION, COARSE_LOCATION};
+        String[] permission = {FINE_LOCATION, COARSE_LOCATION};
 
-        if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
-                FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-            if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
-                    COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                    COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 mLocationPermissionGranted = true;
                 initMap();
-            }else{
+            } else {
                 ActivityCompat.requestPermissions(this,
                         permission,
                         LOCATION_PERMISSION_REQUEST_CODE);
             }
-        }else {
+        } else {
             ActivityCompat.requestPermissions(this,
                     permission,
                     LOCATION_PERMISSION_REQUEST_CODE);
@@ -180,9 +194,9 @@ public class Global extends AppCompatActivity implements OnMapReadyCallback {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         mLocationPermissionGranted = false;
 
-        switch (requestCode){
-            case LOCATION_PERMISSION_REQUEST_CODE:{
-                if(grantResults.length>0){
+        switch (requestCode) {
+            case LOCATION_PERMISSION_REQUEST_CODE: {
+                if (grantResults.length > 0) {
                     for (int grantResult : grantResults) {
                         if (grantResult != PackageManager.PERMISSION_GRANTED) {
                             mLocationPermissionGranted = false;
@@ -205,14 +219,38 @@ public class Global extends AppCompatActivity implements OnMapReadyCallback {
     }
 
     public void checkout(View view) {
-        if(mLocationPermissionGranted) {
-            Intent intent = new Intent(this, Where.class);
-            intent.putExtra("CurrentLocation", currentLocation);
-            intent.putExtra("WhenceAddress", whenceAddress);
-            startActivity(intent);
-        }
-        else {
-            Toast.makeText(this, "Включите геолокацию", Toast.LENGTH_LONG).show();
+        if(checkPlace==null) {
+            if (mLocationPermissionGranted) {
+                Intent intent = new Intent(this, Where.class);
+                intent.putExtra("CurrentLocation", currentLocation);
+                intent.putExtra("WhenceAddress", globalAddress);
+                startActivity(intent);
+            } else {
+                Toast.makeText(this, "Включите геолокацию", Toast.LENGTH_LONG).show();
+            }
+        }else {
+            if(checkPlace.equals("Whence")){
+                Intent intent = new Intent(this, Whence.class);
+                if(mLocationPermissionGranted) {
+                    intent.putExtra("WhenceAddress", globalAddress);
+                }else {
+                    Toast.makeText(this, "Включите геолокацию", Toast.LENGTH_LONG).show();
+                }
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
+                finish();
+            }
+            if(checkPlace.equals("Where")){
+                Intent intent = new Intent(this, Where.class);
+                if(mLocationPermissionGranted) {
+                    intent.putExtra("WhereAddress", globalAddress);
+                }else {
+                    Toast.makeText(this, "Включите геолокацию", Toast.LENGTH_LONG).show();
+                }
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
+                finish();
+            }
         }
     }
 

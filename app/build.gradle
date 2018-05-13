@@ -26,6 +26,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.rengwuxian.materialedittext:library:2.1.4'
     implementation 'com.google.android.gms:play-services-maps:15.0.1'
     implementation 'com.yandex.android:mapkit:3.0.0'
     // Библиотеки Firebase

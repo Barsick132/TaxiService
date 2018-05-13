@@ -13,10 +13,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,13 +27,19 @@ import java.util.TimerTask;
 public class Where extends AppCompatActivity {
 
     private static final String TAG = "WhereActivity";
-    private EditText etWhereAddress;
+
+    private boolean waitBack = false;
+
+    private MaterialEditText metWhereAddress;
     private LinearLayout llVariant;
     private CheckBox myCity;
+
     private Timer timer = new Timer();
     private final long DELAY = 1000; // in ms
+
     private Location currentLocation;
     private Address whenceAddress;
+    private Address whereAddress;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,8 +49,8 @@ public class Where extends AppCompatActivity {
         llVariant = findViewById(R.id.whereVariants);
         myCity = findViewById(R.id.whereMyCity);
         myCity.setOnCheckedChangeListener((buttonView, isChecked) -> geoLocate());
-        etWhereAddress = findViewById(R.id.whereAddress);
-        etWhereAddress.addTextChangedListener(new TextWatcher() {
+        metWhereAddress = findViewById(R.id.whereAddress);
+        metWhereAddress.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count,
                                           int after) {
@@ -88,6 +94,39 @@ public class Where extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(waitBack){
+            waitBack = false;
+        }else {
+            Bundle arguments = getIntent().getExtras();
+            if(arguments!=null){
+                whereAddress = (Address) arguments.get("WhereAddress");
+            }
+            if(whereAddress!=null)
+            {
+                myCity.setChecked(false);
+                String street = whereAddress.getLocality() + ", " + whereAddress.getThoroughfare();
+                if(whereAddress.getSubThoroughfare()!=null) street += ", " + whereAddress.getSubThoroughfare();
+                metWhereAddress.setText(street);
+
+                Intent intent = new Intent(Where.this, Ordering.class);
+                intent.putExtra("CurrentLocation", currentLocation);
+                intent.putExtra("WhenceAddress", whenceAddress);
+                intent.putExtra("WhereAddress", whereAddress);
+                startActivity(intent);
+                waitBack = true; //установливается, чтобы при возврате не вернуться к Ordering
+            }
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+    }
+
     private void geoLocate() {
         Log.d(TAG, "geoLocate: search geolocating");
 
@@ -98,13 +137,13 @@ public class Where extends AppCompatActivity {
             Geocoder geocoder = new Geocoder(Where.this);
             try {
                 Address currentAddress = geocoder.getFromLocation(currentLocation.getLatitude(), currentLocation.getLongitude(), 1).get(0);
-                searchString = currentAddress.getLocality() + ", " + etWhereAddress.getText().toString();
+                searchString = currentAddress.getLocality() + ", " + metWhereAddress.getText().toString();
             }catch (IOException e){
-                searchString = etWhereAddress.getText().toString();
+                searchString = metWhereAddress.getText().toString();
             }
         }
         else{
-            searchString = etWhereAddress.getText().toString();
+            searchString = metWhereAddress.getText().toString();
         }
 
         Geocoder geocoder = new Geocoder(Where.this);
@@ -151,15 +190,13 @@ public class Where extends AppCompatActivity {
 
         linearLayout.setLayoutParams(layoutParams);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
-        linearLayout.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Where.this, Ordering.class);
-                intent.putExtra("CurrentLocation", currentLocation);
-                intent.putExtra("WhenceAddress", whenceAddress);
-                intent.putExtra("WhereAddress", address);
-                startActivity(intent);
-            }
+        linearLayout.setOnClickListener(v -> {
+            Intent intent = new Intent(Where.this, Ordering.class);
+            intent.putExtra("CurrentLocation", currentLocation);
+            intent.putExtra("WhenceAddress", whenceAddress);
+            intent.putExtra("WhereAddress", address);
+            startActivity(intent);
+            waitBack = true;
         });
         linearLayout.addView(tvStreet);
         linearLayout.addView(tvCityAndCoutry);
@@ -174,6 +211,7 @@ public class Where extends AppCompatActivity {
 
     public void checkWhereToMap(View view) {
         Intent intent = new Intent(this, Global.class);
+        intent.putExtra("CheckPlace", "Where");
         startActivity(intent);
     }
 

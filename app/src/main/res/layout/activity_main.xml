@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -12,15 +13,17 @@
         android:gravity="start"
         android:textColor="@color/colorRed" />
 
-    <EditText
+    <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/mainFullName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:drawableStart="@drawable/ic_person_black_24dp"
         android:ems="10"
         android:hint="@string/fullName"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        app:met_floatingLabel="highlight"
+        app:met_helperTextAlwaysShown="true"
+        app:met_primaryColor="@color/colorAccent" />
 
     <Button
         android:id="@+id/mainBtnConfirm"
@@ -30,5 +33,6 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="5dp"
         android:onClick="mainToConfirm"
-        android:text="@string/confirm" />
+        android:text="@string/confirm" >
+    </Button>
 </LinearLayout>

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.firebase.ui.auth.AuthUI;
@@ -12,8 +11,10 @@ import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.Collections;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 123;
 
     private TextView tvMessages;
-    private EditText etFullName;
+    private MaterialEditText metFullName;
 
     private enum CodeMessages {
         SUCCESSFULLY_SIGNED,
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         tvMessages = findViewById(R.id.mainTextErrors);
-        etFullName = findViewById(R.id.mainFullName);
+        metFullName = findViewById(R.id.mainFullName);
 
         setTheme(R.style.Widget_AppCompat_ActionBar_TabBar);
         setTitle("Регистрация/Вход");
@@ -95,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 // Initialized state, show only the phone number field and start button
                 if (user.getDisplayName() == null) {
                     UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                            .setDisplayName(etFullName.getText().toString())
+                            .setDisplayName(metFullName.getText().toString())
                             .build();
                     user.updateProfile(profileUpdates);
                 }
@@ -108,9 +109,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private boolean isFullName(String str) {
+        Pattern pattern = Pattern.compile("([a-zA-Z][a-z]* [a-zA-Z][a-z]*)|([а-яА-Я][а-я]* [а-яА-Я][а-я]*)");
+        return pattern.matcher(str).matches();
+    }
+
     public void mainToConfirm(View view) {
-        if (etFullName.getText().toString().isEmpty()) {
-            etFullName.setError("Поле обязательно для заполнения");
+        String fullName = metFullName.getText().toString();
+        if (!isFullName(fullName)) {
+            metFullName.setError("Поле должно содержать ваши Фамилию и Имя с заглавных букв через пробел");
             return;
         }
         startActivityForResult(
