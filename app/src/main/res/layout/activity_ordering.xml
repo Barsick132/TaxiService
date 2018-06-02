@@ -86,7 +86,6 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="128 руб."
                 android:textSize="34sp" />
         </LinearLayout>
 

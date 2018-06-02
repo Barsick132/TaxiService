@@ -25,11 +25,14 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvMessages;
     private MaterialEditText metFullName;
 
+
+    // Коды верификации
     private enum CodeMessages {
         SUCCESSFULLY_SIGNED,
         SIGNED_INVALIDE
     }
 
+    // Обработчик создания текущей активити
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,14 +47,16 @@ public class MainActivity extends AppCompatActivity {
         setTitle("Регистрация/Вход");
     }
 
+    // Обработчик запуска текущей активити
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
+        // Проверяем не зарегистрирован ли пользователь
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
     }
 
+    // Обработчик завершения активити верификации
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -60,66 +65,68 @@ public class MainActivity extends AppCompatActivity {
             IdpResponse response = IdpResponse.fromResultIntent(data);
 
             if (resultCode == RESULT_OK) {
-                // Successfully signed in
+                // Если пользователь верифицировался
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 updateUI(user);
             } else {
+                // Если пользователь не верифицировался
                 updateUI(CodeMessages.SIGNED_INVALIDE);
             }
         }
     }
 
-    /*
-    private void PhoneNumberIsVerified(String phone) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        // Create a new user with a first and last name
-        Map<String, Object> user = new HashMap<>();
-        user.put("phone", phone);
-
-        db.collection("clients").document(Objects.requireNonNull(mAuth.getUid())).set(user);
-    }
-    */
-
+    // Метод обновления интерфейса и перехода к следующей активити
+    // Если был передан только код верификации
     private void updateUI(CodeMessages uiState) {
         updateUI(uiState, mAuth.getCurrentUser());
     }
 
+    // Метод обновления интерфейса и перехода к следующей активити
+    // Если был передан только user
     private void updateUI(FirebaseUser user) {
         if (user != null) {
             updateUI(CodeMessages.SUCCESSFULLY_SIGNED, user);
         }
     }
 
+    // Метод обновления интерфейса и перехода к следующей активити
     private void updateUI(CodeMessages uiState, FirebaseUser user) {
         switch (uiState) {
+            // Если был передан данный код, значит пользователь аутентифицировался и user!=null
             case SUCCESSFULLY_SIGNED:
-                // Initialized state, show only the phone number field and start button
+                // Регистрируем имя пользователя в базе, если оно еще не было задано
                 if (user.getDisplayName() == null) {
                     UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                             .setDisplayName(metFullName.getText().toString())
                             .build();
                     user.updateProfile(profileUpdates);
                 }
+                // Запускаем главное активити и закрываем текущее
                 startActivity(new Intent(this, Global.class));
                 finish();
                 break;
+                // Если был передан данный код, значит произошла ошибка верификации номера телефона
             case SIGNED_INVALIDE:
                 tvMessages.setText("Ошибка верификации номера телефона. Проверьте подключение к сете и затем попробуйте снова.");
                 break;
         }
     }
 
+    // Проверка соответствия полного имени пользователя
     private boolean isFullName(String str) {
         Pattern pattern = Pattern.compile("([a-zA-Z][a-z]* [a-zA-Z][a-z]*)|([а-яА-Я][а-я]* [а-яА-Я][а-я]*)");
         return pattern.matcher(str).matches();
     }
 
+    // Запуск верификации номера телефона
     public void mainToConfirm(View view) {
         String fullName = metFullName.getText().toString();
+        // Проверяем имя пользователя
         if (!isFullName(fullName)) {
             metFullName.setError("Поле должно содержать ваши Фамилию и Имя с заглавных букв через пробел");
             return;
         }
+        // Запускаем активити верификации
         startActivityForResult(
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()

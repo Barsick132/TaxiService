@@ -12,19 +12,15 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme" />
 
-    <com.yandex.mapkit.mapview.MapView
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/WaitingMap"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-    <!--
-    <ru.yandex.yandexmapkit.MapView
-        android:id="@+id/WaitingMap"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:apiKey="WT1goYZNqbPdNBMruaSCPPmR3er4QXd-X9XVg6MR15ATij2rmtpUY-SCHS7gB1z-XHSNb4PlE1WpuljfF9Q5~Kv8JLeuJFp6fQxoLRiB37o=" />
-        -->
+        tools:context="com.lstu.kovalchuk.taxiservice.Waiting" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -35,12 +35,15 @@ import java.util.regex.Pattern;
 
 public class Global extends AppCompatActivity implements OnMapReadyCallback {
 
+    // Обработчик завершения инициализации карты
     @Override
     public void onMapReady(GoogleMap googleMap) {
         Log.d(TAG, "onMapReady: map is ready");
         mMap = googleMap;
 
+        // Если есть права доступа к даным местоположения
         if (mLocationPermissionGranted) {
+            // Получаем и отображаем текущее местоположение на карте
             getDeviceLocation();
 
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -49,8 +52,9 @@ public class Global extends AppCompatActivity implements OnMapReadyCallback {
 
                 return;
             }
-            mMap.setMyLocationEnabled(true);
-            mMap.setOnCameraIdleListener(this::showAddress);
+
+            mMap.setMyLocationEnabled(true); // Делаем доступной кнопку определения местоположения на карте
+            mMap.setOnCameraIdleListener(this::showAddress); // Запускаем слушателя изменения положения камеры на карте
         }
     }
 
@@ -71,6 +75,7 @@ public class Global extends AppCompatActivity implements OnMapReadyCallback {
     private Address globalAddress;
     private String checkPlace = null;
 
+    // Обработчик создания текущей активити
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,12 +85,16 @@ public class Global extends AppCompatActivity implements OnMapReadyCallback {
         btnGlobal = findViewById(R.id.globalButton);
         tvAddress = findViewById(R.id.globalTVAddress);
 
+        // Получение прав доступа о местоположении, отрисовка карты
+        // установка текущего местоположения на карте
         getLocationPermission();
 
+        // Инициализация тулбара
         initToolbar();
 
         Bundle arguments = getIntent().getExtras();
         if (arguments != null) {
+            // Если передан CheckPlace, значит указывается место на карте
             if(arguments.getString("CheckPlace")!=null){
                 checkPlace = arguments.getString("CheckPlace");
                 updateUI();
@@ -93,26 +102,33 @@ public class Global extends AppCompatActivity implements OnMapReadyCallback {
         }
     }
 
+    // Метод изменения интерфейса
     private void updateUI() {
         toolbar.setVisibility(View.GONE);
         btnGlobal.setText("Подтвердить");
     }
 
+    // Обработчик изменений местоположения камеры на карте
+    // Отображает адрес центра карты
     private void showAddress() {
-        Log.d(TAG, "showAddress: show address map center position");
+        Log.d(TAG, "showAddress: отобразить адрес центра карты");
 
         List<Address> addressList = new ArrayList<>();
         Geocoder geocoder = new Geocoder(Global.this);
         try {
+            //Получаем информацию по координатам центра карты
             addressList = geocoder.getFromLocation(mMap.getCameraPosition().target.latitude, mMap.getCameraPosition().target.longitude, 1);
         } catch (IOException e) {
             Log.e(TAG, "showAddress: IOException: " + e.getMessage());
         }
 
+        // Если есть хотя бы улица
         if (addressList.size() > 0 && addressList.get(0).getThoroughfare() != null) {
+            // Выводи название улицы
             Address address = addressList.get(0);
             String street = address.getThoroughfare();
 
+            // Также сокращаем слово улица до ул.
             Pattern pattern = Pattern.compile("^улица\\b.+");
             if (pattern.matcher(street).matches()) {
                 street = street.replace("улица ", "ул. ");
@@ -122,6 +138,7 @@ public class Global extends AppCompatActivity implements OnMapReadyCallback {
                 street = street.replace(" улица", " ул.");
             }
 
+            // Если есть информация о номере дома, то выводим ее после названия улицы
             if (address.getSubThoroughfare() != null) {
                 street += ", " + address.getSubThoroughfare();
             }
@@ -130,23 +147,29 @@ public class Global extends AppCompatActivity implements OnMapReadyCallback {
         }
     }
 
+    // Метод получения данных местоположения для отображения конкретного места на карте при первом запуске
     private void getDeviceLocation() {
-        Log.d(TAG, "getDeviceLocation: getting the devices current location");
+        Log.d(TAG, "getDeviceLocation: получение координат текущего местоположения");
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         try {
+            // Если есть право на получение данных местоположения
             if (mLocationPermissionGranted) {
+                // Пытаемся их получить
                 Task location = mFusedLocationProviderClient.getLastLocation();
                 location.addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        Log.d(TAG, "onComplete: found location!");
+                        // Если удалось определить местоположение
+                        Log.d(TAG, "onComplete: местоположение определено!");
                         currentLocation = (Location) task.getResult();
 
+                        // Меняем местоположение камеры
                         moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
                         showAddress();
                     } else {
-                        Log.d(TAG, "onComplete: current location is null");
+                        // Если НЕ удалось определить местоположение
+                        Log.d(TAG, "onComplete: местоположение НЕ определено");
                         Toast.makeText(Global.this, "Не удалось определить текущее местоположение", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -156,40 +179,51 @@ public class Global extends AppCompatActivity implements OnMapReadyCallback {
         }
     }
 
+    // Перемещаем камеру по заданным координатам с заданным зумом
     private void moveCamera(LatLng latLng, float zoom) {
-        Log.d(TAG, "moveCamera: moving the camera to: lat: " + latLng.latitude + ", lng: " + latLng.longitude);
+        Log.d(TAG, "moveCamera: перемещаем камеру на: широту: " + latLng.latitude + ", долготу: " + latLng.longitude);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
     }
 
+    // Инициализация карты
     private void initMap() {
-        Log.d(TAG, "initMap: initializing map");
+        Log.d(TAG, "initMap: инициализация карты");
+        // Отображение фрагмента с картой
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.globalMap);
         mapFragment.getMapAsync(Global.this);
     }
 
+    // Получение прав доступа к данным местоположения
     private void getLocationPermission() {
-        Log.d(TAG, "getLocationPermission: getting location permissions");
+        Log.d(TAG, "getLocationPermission: получение прав доступа к данным местоположения");
         String[] permission = {FINE_LOCATION, COARSE_LOCATION};
 
+        // Проверка предоставления прав доступа к данным местоположения
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
                 FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
                     COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                // Если права предоставлены инициализируем карту
                 mLocationPermissionGranted = true;
                 initMap();
             } else {
+                // Если права не были предоставлены
+                // Вызов диалогового окна для предоставления прав доступа к данным местоположения
                 ActivityCompat.requestPermissions(this,
                         permission,
                         LOCATION_PERMISSION_REQUEST_CODE);
             }
         } else {
+            // Если права не были предоставлены
+            // Вызов диалогового окна для предоставления прав доступа к данным местоположения
             ActivityCompat.requestPermissions(this,
                     permission,
                     LOCATION_PERMISSION_REQUEST_CODE);
         }
     }
 
+    // Обработчик окончания вызова диалогового окна предоставления прав доступа
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         mLocationPermissionGranted = false;
@@ -199,10 +233,12 @@ public class Global extends AppCompatActivity implements OnMapReadyCallback {
                 if (grantResults.length > 0) {
                     for (int grantResult : grantResults) {
                         if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                            // Если хоть какое-то право отсутствует
                             mLocationPermissionGranted = false;
                             return;
                         }
                     }
+                    // Если все права были предоставлены
                     mLocationPermissionGranted = true;
                     initMap();
                 }
@@ -211,6 +247,7 @@ public class Global extends AppCompatActivity implements OnMapReadyCallback {
         }
     }
 
+    // Инициализация тулбара
     private void initToolbar() {
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.globalToolbar1);
         toolbar.setOnMenuItemClickListener(menuItem -> false);
@@ -218,35 +255,51 @@ public class Global extends AppCompatActivity implements OnMapReadyCallback {
         toolbar.inflateMenu(R.menu.menu);
     }
 
+
+    // Обработчик нажатия кнопки
     public void checkout(View view) {
+        // Если НЕ указываем место на карте
         if(checkPlace==null) {
+            // Если есть права на получение местоположения, можно начать
+            // оформление заказа
             if (mLocationPermissionGranted) {
+                // Вызываем активити указания адреса отправления
+                // Передаем данные текущего местоположения и адрес отправления
                 Intent intent = new Intent(this, Where.class);
                 intent.putExtra("CurrentLocation", currentLocation);
                 intent.putExtra("WhenceAddress", globalAddress);
+                intent.putExtra("changeAddress", false);
                 startActivity(intent);
             } else {
                 Toast.makeText(this, "Включите геолокацию", Toast.LENGTH_LONG).show();
             }
         }else {
+            // Если указываем место на карте для активити Whence
             if(checkPlace.equals("Whence")){
+                // При наличии прав доступа к геолокации передаем адрес
+                // отправления и возвращаемся к Whence
                 Intent intent = new Intent(this, Whence.class);
                 if(mLocationPermissionGranted) {
                     intent.putExtra("WhenceAddress", globalAddress);
                 }else {
                     Toast.makeText(this, "Включите геолокацию", Toast.LENGTH_LONG).show();
                 }
+                // Если прав нет, то возвращаемся без информации
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
                 finish();
             }
+            // Если указываем место на карте для активити Where
             if(checkPlace.equals("Where")){
+                // При наличии прав доступа к геолокации передаем адрес
+                // отправления и возвращаемся к Where
                 Intent intent = new Intent(this, Where.class);
                 if(mLocationPermissionGranted) {
                     intent.putExtra("WhereAddress", globalAddress);
                 }else {
                     Toast.makeText(this, "Включите геолокацию", Toast.LENGTH_LONG).show();
                 }
+                // Если прав нет, то возвращаемся без информации
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
                 finish();
@@ -254,13 +307,9 @@ public class Global extends AppCompatActivity implements OnMapReadyCallback {
         }
     }
 
+    // Обработчик открытия меню
     public void openMenu(MenuItem item) {
         Intent intent = new Intent(this, Menu.class);
-        startActivity(intent);
-    }
-
-    public void checkWhence(View view) {
-        Intent intent = new Intent(this, Whence.class);
         startActivity(intent);
     }
 }
