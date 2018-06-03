@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
 
@@ -58,14 +59,16 @@ public class Where extends AppCompatActivity {
             public void beforeTextChanged(CharSequence s, int start, int count,
                                           int after) {
             }
+
             // Пока текст вводится
             @Override
             public void onTextChanged(final CharSequence s, int start, int before,
                                       int count) {
                 // Сбрасываем таймер
-                if(timer != null)
+                if (timer != null)
                     timer.cancel();
             }
+
             // После ввода текста
             @Override
             public void afterTextChanged(final Editable s) {
@@ -87,21 +90,19 @@ public class Where extends AppCompatActivity {
 
         Bundle arguments = getIntent().getExtras();
         // Если есть переданные аргументы
-        if(arguments!=null){
+        if (arguments != null) {
             // Получаем эти аргументы как текущие координаты и адрес отправления
             currentLocation = (Location) arguments.get("CurrentLocation");
             whenceAddress = (Address) arguments.get("WhenceAddress");
             changeAddress = (boolean) arguments.get("changeAddress");
         }
         // Если были переданы данные текущего местоположения
-        if(currentLocation!=null)
-        {
+        if (currentLocation != null) {
             // Отображаем checkbox "Мой город"
             myCity.setVisibility(View.VISIBLE);
             // И выставляем галочку
             myCity.setChecked(true);
-        }
-        else{
+        } else {
             // НЕ Отображаем checkbox "Мой город"
             myCity.setVisibility(View.GONE);
             // Снимаем галочку
@@ -113,7 +114,7 @@ public class Where extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if(changeAddress) {
+        if (changeAddress) {
             Bundle arguments = getIntent().getExtras();
             // Были переданы аргументы
             if (arguments != null) {
@@ -129,8 +130,7 @@ public class Where extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        }
-        else {
+        } else {
             // Если ждем возвращения из Ordering
             if (waitBack) {
                 waitBack = false;
@@ -181,17 +181,16 @@ public class Where extends AppCompatActivity {
         Geocoder geocoder = new Geocoder(Where.this);
 
         // Если стоит галочка "Мой город"
-        if(myCity.isChecked()){
+        if (myCity.isChecked()) {
             try {
                 // Определяется город по текущим координатам и прописывается в начале строки поиска адреса
                 // через запятую прописывается запрос пользователя
                 Address currentAddress = geocoder.getFromLocation(currentLocation.getLatitude(), currentLocation.getLongitude(), 1).get(0);
                 searchString = currentAddress.getLocality() + ", " + metWhereAddress.getText().toString();
-            }catch (IOException e){
+            } catch (IOException e) {
                 searchString = metWhereAddress.getText().toString();
             }
-        }
-        else{
+        } else {
             // Если НЕ стоит галочка "Мой город", то в строку поиска дублируется запрос пользователя
             searchString = metWhereAddress.getText().toString();
         }
@@ -238,22 +237,21 @@ public class Where extends AppCompatActivity {
 
         String globalAddress = address.getLocality() + ", " + address.getCountryName();
         tvCityAndCoutry.setLayoutParams(layoutParams);
-        tvCityAndCoutry.setPadding(0,0,0,10);
+        tvCityAndCoutry.setPadding(0, 0, 0, 10);
         tvCityAndCoutry.setText(globalAddress);
 
         linearLayout.setLayoutParams(layoutParams);
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         // Обработчик нажатия на один из вариантов адресов
         linearLayout.setOnClickListener(v -> {
-            if(changeAddress){
+            if (changeAddress) {
                 // и переходим обратно к Ordering активити
                 Intent intent = new Intent(Where.this, Ordering.class);
                 intent.putExtra("WhereAddress", address);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
                 finish();
-            }
-            else {
+            } else {
                 // Создаем новое активити Ordering и передаем аргументы
                 Intent intent = new Intent(Where.this, Ordering.class);
                 intent.putExtra("CurrentLocation", currentLocation);

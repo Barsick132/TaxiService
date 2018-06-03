@@ -1,12 +1,15 @@
 package com.lstu.kovalchuk.taxiservice;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -95,10 +98,26 @@ public class Global extends AppCompatActivity implements OnMapReadyCallback {
         Bundle arguments = getIntent().getExtras();
         if (arguments != null) {
             // Если передан CheckPlace, значит указывается место на карте
-            if(arguments.getString("CheckPlace")!=null){
+            if (arguments.getString("CheckPlace") != null) {
                 checkPlace = arguments.getString("CheckPlace");
                 updateUI();
             }
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences sharedPref = getSharedPreferences("com.lstu.kovalchuk.taxiservice", Context.MODE_PRIVATE);
+        String orderID = sharedPref.getString("OrderID", null);
+        if(orderID!=null){
+            Intent intent = new Intent(Global.this, Waiting.class);
+            intent.putExtra("OrderID", orderID);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
         }
     }
 
@@ -120,6 +139,7 @@ public class Global extends AppCompatActivity implements OnMapReadyCallback {
             addressList = geocoder.getFromLocation(mMap.getCameraPosition().target.latitude, mMap.getCameraPosition().target.longitude, 1);
         } catch (IOException e) {
             Log.e(TAG, "showAddress: IOException: " + e.getMessage());
+            Toast.makeText(Global.this, "Не удалось определить адрес. Проверьте соединение с сетью", Toast.LENGTH_LONG).show();
         }
 
         // Если есть хотя бы улица
@@ -259,7 +279,7 @@ public class Global extends AppCompatActivity implements OnMapReadyCallback {
     // Обработчик нажатия кнопки
     public void checkout(View view) {
         // Если НЕ указываем место на карте
-        if(checkPlace==null) {
+        if (checkPlace == null) {
             // Если есть права на получение местоположения, можно начать
             // оформление заказа
             if (mLocationPermissionGranted) {
@@ -273,15 +293,15 @@ public class Global extends AppCompatActivity implements OnMapReadyCallback {
             } else {
                 Toast.makeText(this, "Включите геолокацию", Toast.LENGTH_LONG).show();
             }
-        }else {
+        } else {
             // Если указываем место на карте для активити Whence
-            if(checkPlace.equals("Whence")){
+            if (checkPlace.equals("Whence")) {
                 // При наличии прав доступа к геолокации передаем адрес
                 // отправления и возвращаемся к Whence
                 Intent intent = new Intent(this, Whence.class);
-                if(mLocationPermissionGranted) {
+                if (mLocationPermissionGranted) {
                     intent.putExtra("WhenceAddress", globalAddress);
-                }else {
+                } else {
                     Toast.makeText(this, "Включите геолокацию", Toast.LENGTH_LONG).show();
                 }
                 // Если прав нет, то возвращаемся без информации
@@ -290,13 +310,13 @@ public class Global extends AppCompatActivity implements OnMapReadyCallback {
                 finish();
             }
             // Если указываем место на карте для активити Where
-            if(checkPlace.equals("Where")){
+            if (checkPlace.equals("Where")) {
                 // При наличии прав доступа к геолокации передаем адрес
                 // отправления и возвращаемся к Where
                 Intent intent = new Intent(this, Where.class);
-                if(mLocationPermissionGranted) {
+                if (mLocationPermissionGranted) {
                     intent.putExtra("WhereAddress", globalAddress);
-                }else {
+                } else {
                     Toast.makeText(this, "Включите геолокацию", Toast.LENGTH_LONG).show();
                 }
                 // Если прав нет, то возвращаемся без информации

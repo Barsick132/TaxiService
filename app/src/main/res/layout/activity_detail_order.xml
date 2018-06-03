@@ -1,222 +1,205 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/detailOrderHeader1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorHeaderWindow"
-        android:gravity="center"
-        android:paddingBottom="16dp"
-        android:paddingTop="16dp"
-        android:text="@string/detailOrder"
-        android:textColor="@color/colorAccent"
-        android:textSize="30sp" />
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="8dp"
-        android:paddingEnd="16dp"
-        android:paddingStart="16dp"
-        android:paddingTop="8dp">
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/detailOrderHeader2"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="5dp"
-            android:text="@string/detailWhence"
-            android:textStyle="bold" />
+            android:orientation="vertical"
+            android:paddingBottom="8dp"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:paddingTop="8dp">
 
-        <TextView
-            android:id="@+id/detailOrderText1"
+            <TextView
+                android:id="@+id/detailOrderHeader2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:text="@string/detailWhence"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/detailOrderWhence"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="0dp"
+                android:paddingStart="20dp"
+                android:paddingTop="2dp"/>
+
+            <TextView
+                android:id="@+id/detailOrderHeader3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:text="@string/detailWhere"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/detailOrderWhere"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="0dp"
+                android:paddingStart="20dp"
+                android:paddingTop="2dp"/>
+
+            <TextView
+                android:id="@+id/detailOrderHeader4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:text="@string/approximateCost"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/detailOrderCost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="0dp"
+                android:paddingStart="20dp"
+                android:paddingTop="2dp"/>
+
+            <TextView
+                android:id="@+id/detailOrderHeader5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:text="@string/approximateTravelTime"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/detailOrderTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="0dp"
+                android:paddingStart="20dp"
+                android:paddingTop="2dp"/>
+
+            <TextView
+                android:id="@+id/detailOrderHeader6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:text="@string/approximateDistance"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/detailOrderDistance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="0dp"
+                android:paddingStart="20dp"
+                android:paddingTop="2dp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorBlack">
+                <!-- Просто линия-->
+            </View>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/detailOrderDriverLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingEnd="0dp"
-            android:paddingStart="20dp"
-            android:paddingTop="2dp"
-            android:text="г. Липецк, ул. Стаханова, 13, п. 4" />
+            android:orientation="vertical"
+            android:paddingBottom="8dp"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:paddingTop="8dp">
 
-        <TextView
-            android:id="@+id/detailOrderHeader3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="5dp"
-            android:text="@string/detailWhere"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/detailOrderHeader7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:text="@string/timeWaiting"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/detailOrderText2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingEnd="0dp"
-            android:paddingStart="20dp"
-            android:paddingTop="2dp"
-            android:text="г. Липецк, ул. Московская, 30" />
+            <TextView
+                android:id="@+id/detailOrderTimeWait"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="0dp"
+                android:paddingStart="20dp"
+                android:paddingTop="2dp"/>
 
-        <TextView
-            android:id="@+id/detailOrderHeader4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="5dp"
-            android:text="@string/approximateCost"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/detailOrderHeader8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:text="@string/driverName"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/detailOrderText3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingEnd="0dp"
-            android:paddingStart="20dp"
-            android:paddingTop="2dp"
-            android:text="128 руб." />
+            <TextView
+                android:id="@+id/detailOrderDriverName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="0dp"
+                android:paddingStart="20dp"
+                android:paddingTop="2dp"/>
 
-        <TextView
-            android:id="@+id/detailOrderHeader5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="5dp"
-            android:text="@string/approximateTravelTime"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/detailOrderHeader9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:text="@string/brandCar"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/detailOrderText4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingEnd="0dp"
-            android:paddingStart="20dp"
-            android:paddingTop="2dp"
-            android:text="8 мин." />
+            <TextView
+                android:id="@+id/detailOrderBrandCar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="0dp"
+                android:paddingStart="20dp"
+                android:paddingTop="2dp"/>
 
-        <TextView
-            android:id="@+id/detailOrderHeader6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="5dp"
-            android:text="@string/approximateDistance"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/detailOrderHeader10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:text="@string/colorCar"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/detailOrderText5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingEnd="0dp"
-            android:paddingStart="20dp"
-            android:paddingTop="2dp"
-            android:text="2.5 км" />
+            <TextView
+                android:id="@+id/detailOrderColorCar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="0dp"
+                android:paddingStart="20dp"
+                android:paddingTop="2dp"/>
 
-        <TextView
-            android:id="@+id/detailOrderHeader7"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="5dp"
-            android:text="@string/timeWaiting"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/detailOrderHeader11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:text="@string/numberCar"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/detailOrderText6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingEnd="0dp"
-            android:paddingStart="20dp"
-            android:paddingTop="2dp"
-            android:text="3 мин." />
+            <TextView
+                android:id="@+id/detailOrderNumberCar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="0dp"
+                android:paddingStart="20dp"
+                android:paddingTop="2dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorBlack">
+                <!-- Просто линия-->
+            </View>
+        </LinearLayout>
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorBlack">
-        <!-- Просто линия-->
-    </View>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="8dp"
-        android:paddingEnd="16dp"
-        android:paddingStart="16dp"
-        android:paddingTop="8dp">
-
-        <TextView
-            android:id="@+id/detailOrderHeader8"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="5dp"
-            android:text="@string/driverName"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/detailOrderText7"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingEnd="0dp"
-            android:paddingStart="20dp"
-            android:paddingTop="2dp"
-            android:text="Семенов Геннадий Степанович" />
-
-        <TextView
-            android:id="@+id/detailOrderHeader9"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="5dp"
-            android:text="@string/brandCar"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/detailOrderText8"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingEnd="0dp"
-            android:paddingStart="20dp"
-            android:paddingTop="2dp"
-            android:text="Renault Logan" />
-
-        <TextView
-            android:id="@+id/detailOrderHeader10"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="5dp"
-            android:text="@string/colorCar"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/detailOrderText9"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingEnd="0dp"
-            android:paddingStart="20dp"
-            android:paddingTop="2dp"
-            android:text="Белый" />
-
-        <TextView
-            android:id="@+id/detailOrderHeader11"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="5dp"
-            android:text="@string/numberCar"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/detailOrderText10"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingEnd="0dp"
-            android:paddingStart="20dp"
-            android:paddingTop="2dp"
-            android:text="М304АК/24" />
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/colorBlack">
-        <!-- Просто линия-->
-    </View>
-</LinearLayout>
+</ScrollView>

@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +16,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 import com.google.gson.Gson;
 import com.lstu.kovalchuk.taxiservice.mapapi.Leg;
 import com.lstu.kovalchuk.taxiservice.mapapi.Route;
@@ -32,7 +39,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class Ordering extends AppCompatActivity {
+public class Ordering extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     public static final String TAG = "Ordering";
 
@@ -43,8 +50,11 @@ public class Ordering extends AppCompatActivity {
     private MaterialEditText metEntranceWhence;
     private MaterialEditText metWhere;
     private MaterialEditText metEntranceWhere;
+    private Spinner spin;
     private EditText etComment;
     private TextView tvOrderingCost;
+    private SwipeRefreshLayout srlRefresh;
+    private Order order = null;
 
     private Location currentLocation;
     private Address whenceAddress;
@@ -58,7 +68,7 @@ public class Ordering extends AppCompatActivity {
         metWhence = findViewById(R.id.orderingWhence1);
         metWhence.setKeyListener(null);
         metWhence.setOnFocusChangeListener((v, hasFocus) -> {
-            if(hasFocus){
+            if (hasFocus) {
                 Intent intent = new Intent(Ordering.this, Whence.class);
                 intent.putExtra("CurrentLocation", currentLocation);
                 startActivity(intent);
@@ -66,7 +76,7 @@ public class Ordering extends AppCompatActivity {
             }
         });
         metWhence.setOnClickListener(v -> {
-            if(!waitWhence) {
+            if (!waitWhence) {
                 Intent intent = new Intent(Ordering.this, Whence.class);
                 intent.putExtra("CurrentLocation", currentLocation);
                 startActivity(intent);
@@ -76,7 +86,7 @@ public class Ordering extends AppCompatActivity {
         metWhere = findViewById(R.id.orderingWhere1);
         metWhere.setKeyListener(null);
         metWhere.setOnFocusChangeListener((v, hasFocus) -> {
-            if(hasFocus){
+            if (hasFocus) {
                 Intent intent = new Intent(Ordering.this, Where.class);
                 intent.putExtra("CurrentLocation", currentLocation);
                 intent.putExtra("changeAddress", true);
@@ -85,7 +95,7 @@ public class Ordering extends AppCompatActivity {
             }
         });
         metWhere.setOnClickListener(v -> {
-            if(!waitWhere) {
+            if (!waitWhere) {
                 Intent intent = new Intent(Ordering.this, Where.class);
                 intent.putExtra("CurrentLocation", currentLocation);
                 intent.putExtra("changeAddress", true);
@@ -96,7 +106,11 @@ public class Ordering extends AppCompatActivity {
         tvOrderingCost = findViewById(R.id.orderingCost);
         etComment = findViewById(R.id.orderingComment);
 
-        Spinner spin = findViewById(R.id.orderingSpinnerList);
+        srlRefresh = findViewById(R.id.orderingRefresh);
+        srlRefresh.setOnRefreshListener(this);
+        srlRefresh.setColorSchemeColors(getResources().getColor(R.color.colorAccent));
+
+        spin = findViewById(R.id.orderingSpinnerList);
 
         ArrayAdapter<String> namesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.spinner_array));
 
@@ -119,9 +133,9 @@ public class Ordering extends AppCompatActivity {
             tmpWhence = (Address) arguments.get("WhenceAddress");
             tmpWhere = (Address) arguments.get("WhereAddress");
 
-            if(tmpCurrentLocation!=null) currentLocation = tmpCurrentLocation;
-            if(tmpWhence!=null) whenceAddress = tmpWhence;
-            if(tmpWhere!=null) whereAddress = tmpWhere;
+            if (tmpCurrentLocation != null) currentLocation = tmpCurrentLocation;
+            if (tmpWhence != null) whenceAddress = tmpWhence;
+            if (tmpWhere != null) whereAddress = tmpWhere;
 
             if (getStringAddress(whenceAddress) != null) {
                 metWhence.setTextColor(getResources().getColor(R.color.colorBlack));
@@ -135,18 +149,25 @@ public class Ordering extends AppCompatActivity {
 
         String position = whenceAddress.getLatitude() + "," + whenceAddress.getLongitude();
         String destination = whereAddress.getLatitude() + "," + whereAddress.getLongitude();
+        GetRoute(position, destination, "true", "ru");
+    }
 
-        try {
+    @Override
+    public void onRefresh() {
+        srlRefresh.setRefreshing(true);
+        srlRefresh.postDelayed(() -> {
+            srlRefresh.setRefreshing(false);
+
+            String position = whenceAddress.getLatitude() + "," + whenceAddress.getLongitude();
+            String destination = whereAddress.getLatitude() + "," + whereAddress.getLongitude();
             GetRoute(position, destination, "true", "ru");
-        } catch (IOException e) {
-            Log.e(TAG, "onStart: ошибка при попытке получить маршруты", e);
-        }
+        }, 3000);
     }
 
     public static class GetQuery {
         OkHttpClient client = new OkHttpClient();
 
-        void run(String url, Callback callback) throws IOException {
+        void run(String url, Callback callback) {
             Request request = new Request.Builder()
                     .url(url)
                     .build();
@@ -155,44 +176,50 @@ public class Ordering extends AppCompatActivity {
         }
     }
 
-    public void GetRoute(String origin, String destination, String sensor, String language) throws IOException {
+    public void GetRoute(String origin, String destination, String sensor, String language) {
         GetQuery query = new GetQuery();
-        String url = "https://maps.googleapis.com/maps/api/directions/json?origin="+origin+"&destination="+destination+"&sensor="+sensor+"&language="+language+"&key=AIzaSyCG1XBUe97ygn6nN9zCy-qG3VoiXbC68Bk";
+        String url = "https://maps.googleapis.com/maps/api/directions/json?origin=" + origin + "&destination=" + destination + "&sensor=" + sensor + "&language=" + language + "&key=AIzaSyCG1XBUe97ygn6nN9zCy-qG3VoiXbC68Bk";
 
         query.run(url, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                Toast.makeText(Ordering.this, "Проверьте соединение с сетью", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "onFailure: не удалось получить маршруты в формате json");
             }
 
             @Override
             public void onResponse(Call call, Response response) {
-                try{
+                try {
                     String jsonString = response.body().string();
                     Gson g = new Gson();
                     RouteResponse routeResponse = g.fromJson(jsonString, RouteResponse.class);
 
-                    if(routeResponse.getStatus().equals("OK"))
-                    {
-                        Double approxCost = (double)50;
+                    if (routeResponse.getStatus().equals("OK")) {
+                        Ordering.this.runOnUiThread(() -> {
+                            Double approxCost = (double) 50;
 
-                        Route minTimeRoute = routeResponse.getRoutes().get(0);
-                        for (Route route : routeResponse.getRoutes()) {
-                            if(route.getLegs().get(0).getDuration().getValue()
-                                    .equals(minTimeRoute.getLegs().get(0).getDuration().getValue())){
-                                minTimeRoute = route;
+                            Route minTimeRoute = routeResponse.getRoutes().get(0);
+                            for (Route route : routeResponse.getRoutes()) {
+                                if (route.getLegs().get(0).getDuration().getValue() < minTimeRoute.getLegs().get(0).getDuration().getValue()) {
+                                    minTimeRoute = route;
+                                }
                             }
-                        }
 
-                        approxCost += ((minTimeRoute.getLegs().get(0).getDuration().getValue()/(double)60)*7) +
-                                ((minTimeRoute.getLegs().get(0).getDistance().getValue()/(double)1000)*7);
-                        approxCost = Math.ceil(approxCost);
+                            approxCost += ((minTimeRoute.getLegs().get(0).getDuration().getValue() / (double) 60) * 7) +
+                                    ((minTimeRoute.getLegs().get(0).getDistance().getValue() / (double) 1000) * 7);
+                            approxCost = Math.ceil(approxCost);
 
-                        Ordering.this.tvOrderingCost.setText(MessageFormat.format("{0} руб.", approxCost.intValue()));
+
+                            tvOrderingCost.setText(MessageFormat.format("{0} руб.", approxCost.intValue()));
+                            order = new Order();
+                            order.setApproxCost(approxCost.intValue()); // Записали приблизительную стоимость в заказ
+                            order.setApproxTimeToDest(minTimeRoute.getLegs().get(0).getDuration().getValue());
+                            order.setApproxDistanceToDest(minTimeRoute.getLegs().get(0).getDistance().getValue());
+                        });
                     }
-                }
-                catch (Exception ex){
+                } catch (Exception ex) {
                     Log.d(TAG, "onResponse: ошибка при получении маршрута в формате json");
+                    Toast.makeText(Ordering.this, "Проверьте соединение с сетью", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -219,7 +246,56 @@ public class Ordering extends AppCompatActivity {
     }
 
     public void callTaxi(View view) {
-        Intent intent = new Intent(this, Waiting.class);
-        startActivity(intent);
+        if (order == null) {
+            Toast.makeText(this,
+                    "Сумма не определена приблизительная сумма. Проверьте соединение и обновите страницу",
+                    Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "callTaxi: order==null");
+            return;
+        }
+        if (getStringAddress(whenceAddress) == null || getStringAddress(whereAddress) == null) {
+            Toast.makeText(this,
+                    "Адрес не определен. Проверьте соединение и обновите страницу",
+                    Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "callTaxi: адрес не определен");
+            return;
+        }
+        String sWhenceAddress = whenceAddress.getLocality() + ", " + getStringAddress(whenceAddress);
+        if (!metEntranceWhence.getText().toString().equals(""))
+            sWhenceAddress += ", п. " + metEntranceWhence.getText().toString();
+
+        String sWhereAddress = whereAddress.getLocality() + ", " + getStringAddress(whereAddress);
+        if (!metEntranceWhere.getText().toString().equals(""))
+            sWhereAddress += ", п. " + metEntranceWhere.getText().toString();
+
+        boolean cashlessPay = false;
+        if (spin.getSelectedItemPosition() == 1) cashlessPay = true;
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        String orderID = db.collection("orders").document().getId();
+
+        order.assembleOrder(orderID, FirebaseAuth.getInstance().getUid(),
+                new GeoPoint(whenceAddress.getLatitude(), whenceAddress.getLongitude()),
+                sWhenceAddress,
+                new GeoPoint(whereAddress.getLatitude(), whereAddress.getLongitude()),
+                sWhereAddress,
+                cashlessPay, etComment.getText().toString());
+
+        db.collection("orders").document(orderID).set(order)
+                .addOnSuccessListener(aVoid -> {
+                    Log.d(TAG, "callTaxi: заказ записан в БД");
+                    Intent intent = new Intent(Ordering.this, Waiting.class);
+                    intent.putExtra("OrderID", orderID);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                })
+                .addOnFailureListener(aVoid -> {
+                    Toast.makeText(Ordering.this,
+                            "Не удалось отправить заказ. Проверьте соединение с сетью",
+                            Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "callTaxi: не удалось записать заказ в БД");
+                });
     }
 }

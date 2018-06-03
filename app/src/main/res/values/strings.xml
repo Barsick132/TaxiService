@@ -314,4 +314,5 @@
     </string>
     <string name="img_location">Img_Location</string>
     <string name="MyCity">мой город</string>
+    <string name="SearchDriver">Поиск водителя...</string>
 </resources>

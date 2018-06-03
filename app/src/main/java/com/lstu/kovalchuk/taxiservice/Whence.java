@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.rengwuxian.materialedittext.MaterialEditText;
 
@@ -143,17 +144,16 @@ public class Whence extends AppCompatActivity {
         Geocoder geocoder = new Geocoder(Whence.this);
 
         // Если стоит галочка "Мой город"
-        if(myCity.isChecked()){
+        if (myCity.isChecked()) {
             try {
                 // Определяется город по текущим координатам и прописывается в начале строки поиска адреса
                 // через запятую прописывается запрос пользователя
                 Address currentAddress = geocoder.getFromLocation(currentLocation.getLatitude(), currentLocation.getLongitude(), 1).get(0);
                 searchString = currentAddress.getLocality() + ", " + metWhenceAddress.getText().toString();
-            }catch (IOException e){
+            } catch (IOException e) {
                 searchString = metWhenceAddress.getText().toString();
             }
-        }
-        else{
+        } else {
             // Если НЕ стоит галочка "Мой город", то в строку поиска дублируется запрос пользователя
             searchString = metWhenceAddress.getText().toString();
         }
@@ -164,6 +164,7 @@ public class Whence extends AppCompatActivity {
             addressList = geocoder.getFromLocationName(searchString, 15);
         } catch (IOException e) {
             Log.e(TAG, "geoLocate: IOException: " + e.getMessage());
+            Toast.makeText(Whence.this, "Не удалось определить адреса. Проверьте соединение с сетью", Toast.LENGTH_LONG).show();
         }
 
         // Если адреса были получены
@@ -200,7 +201,7 @@ public class Whence extends AppCompatActivity {
 
         String globalAddress = address.getLocality() + ", " + address.getCountryName();
         tvCityAndCoutry.setLayoutParams(layoutParams);
-        tvCityAndCoutry.setPadding(0,0,0,10);
+        tvCityAndCoutry.setPadding(0, 0, 0, 10);
         tvCityAndCoutry.setText(globalAddress);
 
         linearLayout.setLayoutParams(layoutParams);
