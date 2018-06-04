@@ -13,7 +13,7 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        DataProfile dataProfile = new DataProfile();
+        Client dataProfile = new Client();
         EditText etFirstName = (EditText)findViewById(R.id.profileName);
         EditText etLastName = (EditText)findViewById(R.id.profileFamily);
         EditText etPatronymic = (EditText)findViewById(R.id.profilePatronymic);

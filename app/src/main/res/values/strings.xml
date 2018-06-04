@@ -315,4 +315,7 @@
     <string name="img_location">Img_Location</string>
     <string name="MyCity">мой город</string>
     <string name="SearchDriver">Поиск водителя...</string>
+    <string name="GoingOut">Выхожу</string>
+    <string name="Arrived">Приехали</string>
+    <string name="assessmentDescrioption">Если вы не выставите оценку и нажмете \"СОХРАНИТЬ\", заказу не будет присвоено никакой оценки</string>
 </resources>

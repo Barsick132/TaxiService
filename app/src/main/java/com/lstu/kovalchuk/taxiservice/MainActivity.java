@@ -3,17 +3,22 @@ package com.lstu.kovalchuk.taxiservice;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.Collections;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView tvMessages;
     private MaterialEditText metFullName;
+    private Button btnConfirm;
 
 
     // Коды верификации
@@ -42,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         tvMessages = findViewById(R.id.mainTextErrors);
         metFullName = findViewById(R.id.mainFullName);
+        btnConfirm = findViewById(R.id.mainBtnConfirm);
 
         setTheme(R.style.Widget_AppCompat_ActionBar_TabBar);
         setTitle("Регистрация/Вход");
@@ -66,8 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (resultCode == RESULT_OK) {
                 // Если пользователь верифицировался
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                updateUI(user);
+                Log.d(TAG, "onActivityResult: верификация завершена. Запускается onStart");
             } else {
                 // Если пользователь не верифицировался
                 updateUI(CodeMessages.SIGNED_INVALIDE);
@@ -96,14 +102,37 @@ public class MainActivity extends AppCompatActivity {
             case SUCCESSFULLY_SIGNED:
                 // Регистрируем имя пользователя в базе, если оно еще не было задано
                 if (user.getDisplayName() == null) {
-                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                            .setDisplayName(metFullName.getText().toString())
-                            .build();
-                    user.updateProfile(profileUpdates);
+
+                    Client client = new Client(metFullName.getText().toString(),user.getPhoneNumber());
+
+                    metFullName.setVisibility(View.GONE);
+                    btnConfirm.setVisibility(View.GONE);
+                    tvMessages.setVisibility(View.GONE);
+
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    db.collection("clients").document(user.getUid()).set(client)
+                            .addOnSuccessListener(vVoid -> {
+                                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                        .setDisplayName(metFullName.getText().toString())
+                                        .build();
+                                user.updateProfile(profileUpdates);
+
+                                startActivity(new Intent(MainActivity.this, Global.class));
+                                finish();
+                            })
+                            .addOnFailureListener(e -> {
+                                metFullName.setVisibility(View.VISIBLE);
+                                btnConfirm.setVisibility(View.VISIBLE);
+                                tvMessages.setVisibility(View.VISIBLE);
+                                Log.e(TAG, "updateUI: " + e.getMessage());
+                                Toast.makeText(MainActivity.this, "Регистрация завершилась ошибкой. попробуйте позже", Toast.LENGTH_SHORT).show();
+                            });
+
+                }else {
+                    // Запускаем главное активити и закрываем текущее
+                    startActivity(new Intent(this, Global.class));
+                    finish();
                 }
-                // Запускаем главное активити и закрываем текущее
-                startActivity(new Intent(this, Global.class));
-                finish();
                 break;
                 // Если был передан данный код, значит произошла ошибка верификации номера телефона
             case SIGNED_INVALIDE:

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.common.io.Resources;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -164,7 +165,7 @@ public class Ordering extends AppCompatActivity implements SwipeRefreshLayout.On
         }, 3000);
     }
 
-    public static class GetQuery {
+    private static class GetQuery {
         OkHttpClient client = new OkHttpClient();
 
         void run(String url, Callback callback) {
@@ -178,7 +179,12 @@ public class Ordering extends AppCompatActivity implements SwipeRefreshLayout.On
 
     public void GetRoute(String origin, String destination, String sensor, String language) {
         GetQuery query = new GetQuery();
-        String url = "https://maps.googleapis.com/maps/api/directions/json?origin=" + origin + "&destination=" + destination + "&sensor=" + sensor + "&language=" + language + "&key=AIzaSyCG1XBUe97ygn6nN9zCy-qG3VoiXbC68Bk";
+        String url = "https://maps.googleapis.com/maps/api/directions/json?" +
+                "origin=" + origin +
+                "&destination=" + destination +
+                "&sensor=" + sensor +
+                "&language=" + language +
+                "&key=" + getResources().getString(R.string.google_maps_webkey);
 
         query.run(url, new Callback() {
             @Override

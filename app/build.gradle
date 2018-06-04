@@ -11,6 +11,8 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         resValue "string", "google_maps_key",
                 (project.findProperty("GOOGLE_MAPS_API_KEY") ?: "")
+        resValue "string", "google_maps_webkey",
+                (project.findProperty("GOOGLE_MAPS_API_WEBKEY") ?: "")
     }
     buildToolsVersion '27.0.3'
     buildTypes {
@@ -31,6 +33,7 @@ dependencies {
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
     implementation 'com.google.android.gms:play-services-location:15.0.1'
     implementation 'com.google.android.gms:play-services-maps:15.0.1'
+    implementation 'com.google.maps.android:android-maps-utils:0.5+'
     // Библиотеки Firebase
     implementation 'com.firebaseui:firebase-ui-auth:3.3.1'
     implementation 'com.google.firebase:firebase-core:16.0.0'

@@ -30,6 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="60dp"
+            android:fontFamily="@font/roboto_light"
             android:text="@string/SearchDriver"
             android:textAlignment="center"
             android:textColor="@color/colorBlack"
@@ -43,10 +44,12 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/waitinfBtnCancel"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.9"
+            android:fontFamily="@font/open_sans_condensed_bold"
             android:onClick="closeOrder"
             android:text="@string/annulment" />
 
@@ -55,9 +58,30 @@
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.87"
+            android:fontFamily="@font/open_sans_condensed_bold"
             android:onClick="openPhoneKeyboard"
             android:text="@string/calling" />
+
+        <Button
+            android:id="@+id/waitingBtnGoingOut"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/open_sans_condensed_bold"
+            android:onClick="openPhoneKeyboard"
+            android:text="@string/GoingOut" />
+
+        <Button
+            android:id="@+id/waitingBtnArrived"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/open_sans_condensed_bold"
+            android:onClick="completeOrder"
+            android:text="@string/Arrived" />
     </LinearLayout>
 
     <Button

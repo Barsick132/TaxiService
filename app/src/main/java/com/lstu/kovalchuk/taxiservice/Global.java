@@ -111,14 +111,24 @@ public class Global extends AppCompatActivity implements OnMapReadyCallback {
         //SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences sharedPref = getSharedPreferences("com.lstu.kovalchuk.taxiservice", Context.MODE_PRIVATE);
         String orderID = sharedPref.getString("OrderID", null);
+        String isAssessment = sharedPref.getString("assessment", null);
         if(orderID!=null){
-            Intent intent = new Intent(Global.this, Waiting.class);
-            intent.putExtra("OrderID", orderID);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-            finish();
+            if(isAssessment==null) {
+                Intent intent = new Intent(Global.this, Waiting.class);
+                intent.putExtra("OrderID", orderID);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }else {
+                Intent intent = new Intent(Global.this, Assessment.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            }
         }
+
     }
 
     // Метод изменения интерфейса

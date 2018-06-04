@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lstu.kovalchuk.taxiservice">
 
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission
         android:minSdkVersion="21"
         android:maxSdkVersion="26"
@@ -26,6 +27,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
 
         <activity android:name=".MainActivity">
             <intent-filter>
