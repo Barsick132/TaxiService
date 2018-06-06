@@ -189,8 +189,12 @@ public class Ordering extends AppCompatActivity implements SwipeRefreshLayout.On
         query.run(url, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Toast.makeText(Ordering.this, "Проверьте соединение с сетью", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "onFailure: не удалось получить маршруты в формате json");
+                try {
+                    Toast.makeText(Ordering.this, "Проверьте соединение с сетью", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "onFailure: не удалось получить маршруты в формате json");
+                } catch (Exception ex) {
+                    Log.e(TAG, "onFailure: " + ex.getMessage());
+                }
             }
 
             @Override

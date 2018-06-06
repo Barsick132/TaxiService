@@ -11,7 +11,7 @@ import com.google.common.io.Resources;
 
 import java.text.MessageFormat;
 
-public class DetailOrder extends AppCompatActivity{
+public class DetailOrder extends AppCompatActivity {
 
     private TextView tvWhence;
     private TextView tvWhere;
@@ -48,7 +48,7 @@ public class DetailOrder extends AppCompatActivity{
         getDetailOrder();
     }
 
-    private void getDetailOrder(){
+    private void getDetailOrder() {
         String whenceStrAddress = null, whereStrAddress = null, driverName = null,
                 brandCar = null, colorCar = null, numberCar = null;
         Integer approxCost = null, approxTime = null,
@@ -80,29 +80,27 @@ public class DetailOrder extends AppCompatActivity{
         }
         if (approxDistance != null) {
             tvDistance.setText(MessageFormat.format("{0} км.",
-                    Math.round(approxDistance/100)/(double)10));
+                    Math.round(approxDistance / 100) / (double) 10));
         }
         if (approxTime != null) {
-            Double hours = Math.floor(approxTime/(double)3600);
-            Double minutes = Math.floor(approxTime/(double)60) - hours.intValue()*60;
+            Double hours = Math.floor(approxTime / (double) 3600);
+            Double minutes = Math.floor(approxTime / (double) 60) - hours.intValue() * 60;
             String strApproxTime;
-            if(hours==0){
+            if (hours == 0) {
                 strApproxTime = MessageFormat.format("{0} мин.", minutes.intValue());
-            }
-            else {
+            } else {
                 strApproxTime = MessageFormat.format("{0} ч. {1} мин.", hours.intValue(), minutes.intValue());
             }
             tvTime.setText(strApproxTime);
         }
 
         if (approxTimeWait != null) {
-            Double hours = Math.floor(approxTimeWait/(double)3600);
-            Double minutes = Math.floor(approxTimeWait/(double)60) - hours.intValue()*60;
+            Double hours = Math.floor(approxTimeWait / (double) 3600);
+            Double minutes = Math.floor(approxTimeWait / (double) 60) - hours.intValue() * 60;
             String strApproxTimeWait;
-            if(hours==0){
+            if (hours == 0) {
                 strApproxTimeWait = MessageFormat.format("{0} мин.", minutes.intValue());
-            }
-            else {
+            } else {
                 strApproxTimeWait = MessageFormat.format("{0} ч. {1} мин.", hours.intValue(), minutes.intValue());
             }
             tvTimeWait.setText(strApproxTimeWait);
@@ -120,10 +118,9 @@ public class DetailOrder extends AppCompatActivity{
             tvNumberCar.setText(numberCar);
         }
 
-        if(driverName == null && brandCar == null && colorCar == null && numberCar == null){
+        if (driverName == null && brandCar == null && colorCar == null && numberCar == null) {
             llDriver.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             llDriver.setVisibility(View.VISIBLE);
         }
     }

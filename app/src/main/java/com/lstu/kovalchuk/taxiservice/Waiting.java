@@ -12,6 +12,7 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -94,6 +95,7 @@ public class Waiting extends AppCompatActivity implements OnMapReadyCallback {
     public static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     public static final String CALL_PHONE = Manifest.permission.CALL_PHONE;
     public static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
+    public static final int CALL_PERMISSION_REQUEST_CODE = 4321;
     private static final float DEFAULT_ZOOM = 15f;
 
     private boolean searchDriver;
@@ -183,20 +185,6 @@ public class Waiting extends AppCompatActivity implements OnMapReadyCallback {
         docRef.get()
                 .addOnSuccessListener(documentSnapshot -> {
                     order = documentSnapshot.toObject(Order.class);
-                    /*try {
-                        Timestamp ts = new Timestamp(new Date());
-                        DriverGPS driverGPS = new DriverGPS(ts, new GeoPoint(52.585503, 39.474788));
-                        db.collection("driverGPS").document(order.getClientUID()).set(driverGPS)
-                                .addOnSuccessListener(aVoid -> {
-                                    Log.d(TAG, "getOrder: радуемся");
-                                })
-                                .addOnFailureListener(e -> {
-                                    Log.e(TAG, "getOrder: " + e.getMessage());
-                                });
-                    }
-                    catch (Exception ex){
-                        Log.e(TAG, "getOrder: " + ex.getMessage());
-                    }*/
                 })
                 .addOnFailureListener(aVoid -> {
                     Toast.makeText(Waiting.this,
@@ -231,54 +219,56 @@ public class Waiting extends AppCompatActivity implements OnMapReadyCallback {
             try {
                 if (documentSnapshot.exists()) {
                     order = documentSnapshot.toObject(Order.class);
+                    if(order!=null) {
+                        if (order.getDriverUID() != null && searchDriver) {
+                            tvSearchDriver.setVisibility(View.GONE);
+                            Toast.makeText(Waiting.this, "Водитель найден :)", Toast.LENGTH_SHORT).show();
+                            btnCall.setVisibility(View.VISIBLE);
+                            searchDriver = false;
 
-                    if (order.getDriverUID() != null && searchDriver) {
-                        tvSearchDriver.setVisibility(View.GONE);
-                        Toast.makeText(Waiting.this, "Водитель найден :)", Toast.LENGTH_SHORT).show();
-                        btnCall.setVisibility(View.VISIBLE);
-                        searchDriver = false;
-
-                        getDriver();
-                        waitingDriver();
-                    }
-                    if (order.getDriverUID() == null && !searchDriver) {
-                        tvSearchDriver.setVisibility(View.VISIBLE);
-                        Toast.makeText(Waiting.this, "Водитель отказался от заказа", Toast.LENGTH_SHORT).show();
-                        btnCall.setVisibility(View.GONE);
-                        searchDriver = true;
-                        driver = null;
-                    }
-
-                    if (order.isDriverArrived() && !order.isClientCameOut()) {
-                        btnGoingOut.setVisibility(View.VISIBLE);
-                        btnCancel.setVisibility(View.GONE);
-
-                        android.app.Notification notification = new android.app.Notification.Builder(Waiting.this)
-                                .setContentTitle("Водитель приехал")
-                                .setContentText("Такси ожидает вас на улице.")
-                                .setSmallIcon(R.drawable.ic_cab)
-                                .build();
-                        android.support.v4.app.NotificationManagerCompat notificationManager = android.support.v4.app.NotificationManagerCompat.from(this);
-                        notificationManager.notify(0, notification);
-                    }
-
-                    if (order.isDriverArrived() && order.isClientCameOut()) {
-                        btnGoingOut.setVisibility(View.GONE);
-                        btnCancel.setVisibility(View.GONE);
-                    }
-
-                    if (order.getDTbegin() != null) {
-                        if (!routePrinted) {
-                            // Водитель начал движение по маршруту
-                            String position = order.getWhenceGeoPoint().getLatitude() + "," + order.getWhenceGeoPoint().getLongitude();
-                            String destination = order.getWhereGeoPoint().getLatitude() + "," + order.getWhereGeoPoint().getLongitude();
-                            routePrint(position, destination);
+                            getDriver();
+                            waitingDriver();
+                        }
+                        if (order.getDriverUID() == null && !searchDriver) {
+                            tvSearchDriver.setVisibility(View.VISIBLE);
+                            Toast.makeText(Waiting.this, "Водитель отказался от заказа", Toast.LENGTH_SHORT).show();
                             btnCall.setVisibility(View.GONE);
-                            btnArrived.setVisibility(View.VISIBLE);
-                            btnGoingOut.performClick();
+                            searchDriver = true;
+                            driver = null;
+                        }
+
+                        if (order.isDriverArrived() && !order.isClientCameOut()) {
+                            btnGoingOut.setVisibility(View.VISIBLE);
+                            btnCancel.setVisibility(View.GONE);
+
+                            android.app.Notification notification = new android.app.Notification.Builder(Waiting.this)
+                                    .setContentTitle("Водитель приехал")
+                                    .setContentText("Такси ожидает вас на улице.")
+                                    .setSmallIcon(R.drawable.ic_logo_ts)
+                                    .build();
+                            android.support.v4.app.NotificationManagerCompat notificationManager = android.support.v4.app.NotificationManagerCompat.from(this);
+                            notificationManager.notify(0, notification);
+                        }
+
+                        if (order.isDriverArrived() && order.isClientCameOut()) {
+                            btnGoingOut.setVisibility(View.GONE);
+                            btnCancel.setVisibility(View.GONE);
+                        }
+
+                        if (order.getDTbegin() != null) {
+                            if (!routePrinted) {
+                                // Водитель начал движение по маршруту
+                                String position = order.getWhenceGeoPoint().getLatitude() + "," + order.getWhenceGeoPoint().getLongitude();
+                                String destination = order.getWhereGeoPoint().getLatitude() + "," + order.getWhereGeoPoint().getLongitude();
+                                routePrint(position, destination);
+                                btnCall.setVisibility(View.GONE);
+                                btnArrived.setVisibility(View.VISIBLE);
+                                btnGoingOut.performClick();
+                            }
                         }
                     }
                 } else {
+                    Log.d(TAG, "onStart: заказ не найден");
                     Toast.makeText(Waiting.this, "Заказ не найден", Toast.LENGTH_SHORT).show();
                 }
             } catch (Exception ex) {
@@ -313,8 +303,12 @@ public class Waiting extends AppCompatActivity implements OnMapReadyCallback {
         query.run(url, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Toast.makeText(Waiting.this, "Не удалось отобразить маршрут", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "onFailure: не удалось получить маршруты в формате json");
+                try {
+                    Toast.makeText(Waiting.this, "Не удалось отобразить маршрут", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "onFailure: не удалось получить маршруты в формате json");
+                } catch (Exception ex) {
+                    Log.e(TAG, "onFailure: " + ex.getMessage());
+                }
             }
 
             @Override
@@ -519,6 +513,29 @@ public class Waiting extends AppCompatActivity implements OnMapReadyCallback {
         }
     }
 
+    // Обработчик окончания вызова диалогового окна предоставления прав доступа
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        mLocationPermissionGranted = false;
+
+        switch (requestCode) {
+            case LOCATION_PERMISSION_REQUEST_CODE: {
+                if (grantResults.length > 0) {
+                    for (int grantResult : grantResults) {
+                        if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                            // Если хоть какое-то право отсутствует
+                            mLocationPermissionGranted = false;
+                            return;
+                        }
+                    }
+                    // Если все права были предоставлены
+                    mLocationPermissionGranted = true;
+                    initMap();
+                }
+            }
+        }
+    }
+
     // Получение прав для совершения звонков
     private void getCallingPermissionGranted() {
         Log.d(TAG, "getCallingPermissionGranted: получение прав доступа для совершения звонков");
@@ -530,7 +547,7 @@ public class Waiting extends AppCompatActivity implements OnMapReadyCallback {
             // Вызов диалогового окна для предоставления прав доступа для совершения звонков
             ActivityCompat.requestPermissions(this,
                     permission,
-                    LOCATION_PERMISSION_REQUEST_CODE);
+                    CALL_PERMISSION_REQUEST_CODE);
         }
     }
 
@@ -571,19 +588,24 @@ public class Waiting extends AppCompatActivity implements OnMapReadyCallback {
     public void closeOrder(View view) {
         db = FirebaseFirestore.getInstance();
         db.collection("orders").document(orderID)
-                .update("cancel", true);
+                .update("cancel", true)
+                .addOnSuccessListener(result ->{
+                    orderID = null;
+                    SharedPreferences sharedPref = getSharedPreferences("com.lstu.kovalchuk.taxiservice", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putString("OrderID", orderID);
+                    editor.apply();
 
-        orderID = null;
-        SharedPreferences sharedPref = getSharedPreferences("com.lstu.kovalchuk.taxiservice", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("OrderID", orderID);
-        editor.apply();
-
-        Intent intent = new Intent(Waiting.this, Global.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-        finish();
+                    Intent intent = new Intent(Waiting.this, Global.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "closeOrder: " + e.getMessage());
+                    Toast.makeText(Waiting.this, "Не удалось отменить заказ. Проверьте соединение с сетью", Toast.LENGTH_SHORT).show();
+                });
     }
 
     // Событие звнока водителю
@@ -600,7 +622,7 @@ public class Waiting extends AppCompatActivity implements OnMapReadyCallback {
 
     public void completeOrder(View view) {
         Timestamp dtend = new Timestamp(new Date());
-        Double totalCost = 50 + ((dtend.getSeconds()-order.getDTbegin().getSeconds()) / (double) 60) * 7 +
+        Double totalCost = 50 + ((dtend.getSeconds() - order.getDTbegin().getSeconds()) / (double) 60) * 7 +
                 (order.getApproxDistanceToDest() / (double) 1000) * 7;
         totalCost = Math.ceil(totalCost);
 
