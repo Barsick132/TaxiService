@@ -11,18 +11,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.GeoPoint;
 import com.google.gson.Gson;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.concurrent.CountDownLatch;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -37,6 +38,8 @@ public class Ordering extends AppCompatActivity implements SwipeRefreshLayout.On
     private boolean waitWhere = false;
     private boolean waitWhence = false;
 
+    private ScrollView svScrollView;
+    private LinearLayout llProgressBar;
     private MaterialEditText metWhence;
     private MaterialEditText metEntranceWhence;
     private MaterialEditText metWhere;
@@ -55,6 +58,9 @@ public class Ordering extends AppCompatActivity implements SwipeRefreshLayout.On
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ordering);
+
+        svScrollView = findViewById(R.id.orderingScrollView);
+        llProgressBar = findViewById(R.id.orderingProgressBar);
 
         metWhence = findViewById(R.id.orderingWhence1);
         metWhence.setKeyListener(null);
@@ -258,6 +264,21 @@ public class Ordering extends AppCompatActivity implements SwipeRefreshLayout.On
         boolean cashlessPay = false;
         if (spin.getSelectedItemPosition() == 1) cashlessPay = true;
 
+        String position = whenceAddress.getLatitude() + "," + whenceAddress.getLongitude();
+        String destination = whereAddress.getLatitude() + "," + whereAddress.getLongitude();
+        CountDownLatch countDownLatch = new CountDownLatch(1);
+        svScrollView.setVisibility(View.GONE);
+        llProgressBar.setVisibility(View.VISIBLE);
+        createOrder(FirebaseAuth.getInstance().getUid(), sWhenceAddress, position, 
+                sWhereAddress, destination, cashlessPay, etComment.getText().toString(), countDownLatch);
+        try {
+            countDownLatch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        svScrollView.setVisibility(View.VISIBLE);
+        llProgressBar.setVisibility(View.GONE);
+        /*
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String orderID = db.collection("orders").document().getId();
 
@@ -284,5 +305,64 @@ public class Ordering extends AppCompatActivity implements SwipeRefreshLayout.On
                             Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "callTaxi: не удалось записать заказ в БД");
                 });
+        */
+    }
+
+    private void createOrder(String clientUID, String whenceAddress, String whenceGeoPoint,
+                             String whereAddress, String whereGeoPoint,
+                             boolean cashlessPay, String comment, CountDownLatch countDownLatch) {
+        GetQuery query = new GetQuery();
+        String url = "https://taxiserviceproject-92fe6.appspot.com/createOrder?" +
+                "clientUID=" + clientUID +
+                "&whenceAddress=" + whenceAddress +
+                "&whenceGeoPoint=" + whenceGeoPoint +
+                "&whereAddress=" + whereAddress +
+                "&whereGeoPoint=" + whereGeoPoint +
+                "&cashlessPay=" + cashlessPay +
+                "&comment=" + comment;
+
+        query.run(url, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                try {
+                    Toast.makeText(Ordering.this, "Не удалось отправить заказ. Проверьте соединение с сетью", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "onFailure: не удалось создать заказ");
+                } catch (Exception ex) {
+                    Log.e(TAG, "onFailure: " + ex.getMessage());
+                }
+                countDownLatch.countDown();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) {
+                try {
+                    String jsonString = response.body().string();
+                    Gson g = new Gson();
+                    RespCreateOrder respCreateOrder = g.fromJson(jsonString, RespCreateOrder.class);
+
+                    if (respCreateOrder.getStatus().equals("OK")) {
+                        Ordering.this.runOnUiThread(() -> {
+                            Log.d(TAG, "onResponse: Заказ создан и записа нв БД");
+                            Intent intent = new Intent(Ordering.this, Waiting.class);
+                            intent.putExtra("OrderID", respCreateOrder.getOrderID());
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            finish();
+                        });
+                    }
+                    if(respCreateOrder.getStatus().equals("FAIL")){
+                        Toast.makeText(Ordering.this,
+                                "Не удалось отправить заказ. Проверьте соединение с сетью",
+                                Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "onResponse: ошибка создания заказа");
+                    }
+                } catch (Exception ex) {
+                    Log.e(TAG, "onResponse: ошибка создания заказа");
+                    Toast.makeText(Ordering.this, "Не удалось отправить заказ. Проверьте соединение с сетью", Toast.LENGTH_SHORT).show();
+                }
+                countDownLatch.countDown();
+            }
+        });
     }
 }

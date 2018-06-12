@@ -18,7 +18,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.Collections;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {

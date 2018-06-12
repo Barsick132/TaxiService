@@ -14,8 +14,8 @@ android {
         applicationId "com.lstu.kovalchuk.taxiservice"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.0.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         resValue "string", "google_maps_key",
                 (project.findProperty("GOOGLE_MAPS_API_KEY") ?: "")

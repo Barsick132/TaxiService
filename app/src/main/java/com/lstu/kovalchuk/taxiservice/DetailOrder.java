@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.common.io.Resources;
-
 import java.text.MessageFormat;
 
 public class DetailOrder extends AppCompatActivity {

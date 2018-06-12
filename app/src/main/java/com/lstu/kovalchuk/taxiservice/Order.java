@@ -1,13 +1,7 @@
 package com.lstu.kovalchuk.taxiservice;
 
-import android.location.Address;
-import android.location.Location;
-
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.GeoPoint;
-
-import java.sql.Time;
-import java.util.Date;
 
 public class Order {
     private String ID;

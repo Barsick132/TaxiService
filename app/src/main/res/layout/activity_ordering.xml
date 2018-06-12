@@ -7,126 +7,147 @@
     android:layout_height="match_parent"
     tools:context=".Ordering">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/orderingProgressBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:descendantFocusability="beforeDescendants"
-            android:focusableInTouchMode="true"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_height="match_parent"
+            android:background="@color/colorDefault"
+            android:gravity="center"
+            android:visibility="gone">
 
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/orderingWhence1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_edit_location_black_24dp"
-                android:ems="10"
-                android:hint="@string/whence"
-                android:inputType="textPostalAddress"
-                app:met_floatingLabel="highlight"
-                app:met_helperTextAlwaysShown="true"
-                app:met_primaryColor="@color/colorAccent" />
-
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/orderingWhence2"
-                android:layout_width="85dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="5dp"
-                android:ems="10"
-                android:hint="@string/entrance"
-                android:inputType="number"
-                app:met_maxCharacters="2"
-                app:met_primaryColor="@color/colorAccent" />
-
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/orderingWhere1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_edit_location_black_24dp2"
-                android:ems="10"
-                android:hint="@string/where"
-                android:inputType="textPostalAddress"
-                app:met_floatingLabel="highlight"
-                app:met_helperTextAlwaysShown="true"
-                app:met_primaryColor="@color/colorAccent" />
-
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/orderingWhere2"
-                android:layout_width="85dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="5dp"
-                android:ems="10"
-                android:hint="@string/entrance"
-                android:inputType="number"
-                app:met_maxCharacters="2"
-                app:met_primaryColor="@color/colorAccent" />
-
-            <Spinner
-                android:id="@+id/orderingSpinnerList"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:text="@string/approximateCost"
-                    android:textSize="17sp" />
-
-                <TextView
-                    android:id="@+id/orderingCost"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:textSize="34sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@color/colorAccent"
-                android:gravity="center"
-                android:padding="1dp">
-
-                <EditText
-                    android:id="@+id/orderingComment"
-                    android:layout_width="match_parent"
-                    android:layout_height="110dp"
-                    android:background="@color/colorDefault"
-                    android:ems="10"
-                    android:gravity="start"
-                    android:hint="@string/comment"
-                    android:inputType="textMultiLine"
-                    android:padding="5dp" />
-
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/orderingButton"
-                style="@style/button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:onClick="callTaxi"
-                android:text="@string/completeCheckout" />
-
-
+            <ProgressBar
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center" />
         </LinearLayout>
-    </ScrollView>
+
+        <ScrollView
+            android:id="@+id/orderingScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:descendantFocusability="beforeDescendants"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/orderingWhence1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_edit_location_black_24dp"
+                    android:ems="10"
+                    android:hint="@string/whence"
+                    android:inputType="textPostalAddress"
+                    app:met_floatingLabel="highlight"
+                    app:met_helperTextAlwaysShown="true"
+                    app:met_primaryColor="@color/colorAccent" />
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/orderingWhence2"
+                    android:layout_width="85dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="5dp"
+                    android:ems="10"
+                    android:hint="@string/entrance"
+                    android:inputType="number"
+                    app:met_maxCharacters="2"
+                    app:met_primaryColor="@color/colorAccent" />
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/orderingWhere1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_edit_location_black_24dp2"
+                    android:ems="10"
+                    android:hint="@string/where"
+                    android:inputType="textPostalAddress"
+                    app:met_floatingLabel="highlight"
+                    app:met_helperTextAlwaysShown="true"
+                    app:met_primaryColor="@color/colorAccent" />
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                    android:id="@+id/orderingWhere2"
+                    android:layout_width="85dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="5dp"
+                    android:ems="10"
+                    android:hint="@string/entrance"
+                    android:inputType="number"
+                    app:met_maxCharacters="2"
+                    app:met_primaryColor="@color/colorAccent" />
+
+                <Spinner
+                    android:id="@+id/orderingSpinnerList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:text="@string/approximateCost"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:id="@+id/orderingCost"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textSize="34sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/colorAccent"
+                    android:gravity="center"
+                    android:padding="1dp">
+
+                    <EditText
+                        android:id="@+id/orderingComment"
+                        android:layout_width="match_parent"
+                        android:layout_height="110dp"
+                        android:background="@color/colorDefault"
+                        android:ems="10"
+                        android:gravity="start"
+                        android:hint="@string/comment"
+                        android:inputType="textMultiLine"
+                        android:padding="5dp" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/orderingButton"
+                    style="@style/button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:onClick="callTaxi"
+                    android:text="@string/completeCheckout" />
+
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
 </android.support.v4.widget.SwipeRefreshLayout>
