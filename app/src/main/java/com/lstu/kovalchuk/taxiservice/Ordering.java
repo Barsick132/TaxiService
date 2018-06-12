@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -16,23 +15,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.common.io.Resources;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.gson.Gson;
-import com.lstu.kovalchuk.taxiservice.mapapi.Leg;
-import com.lstu.kovalchuk.taxiservice.mapapi.Route;
-import com.lstu.kovalchuk.taxiservice.mapapi.RouteResponse;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.io.IOException;
 import java.text.MessageFormat;
-import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -150,7 +140,7 @@ public class Ordering extends AppCompatActivity implements SwipeRefreshLayout.On
 
         String position = whenceAddress.getLatitude() + "," + whenceAddress.getLongitude();
         String destination = whereAddress.getLatitude() + "," + whereAddress.getLongitude();
-        GetRoute(position, destination, "true", "ru");
+        GetRoute(position, destination);
     }
 
     @Override
@@ -161,7 +151,7 @@ public class Ordering extends AppCompatActivity implements SwipeRefreshLayout.On
 
             String position = whenceAddress.getLatitude() + "," + whenceAddress.getLongitude();
             String destination = whereAddress.getLatitude() + "," + whereAddress.getLongitude();
-            GetRoute(position, destination, "true", "ru");
+            GetRoute(position, destination);
         }, 3000);
     }
 
@@ -177,14 +167,11 @@ public class Ordering extends AppCompatActivity implements SwipeRefreshLayout.On
         }
     }
 
-    public void GetRoute(String origin, String destination, String sensor, String language) {
+    public void GetRoute(String origin, String destination) {
         GetQuery query = new GetQuery();
-        String url = "https://maps.googleapis.com/maps/api/directions/json?" +
-                "origin=" + origin +
-                "&destination=" + destination +
-                "&sensor=" + sensor +
-                "&language=" + language +
-                "&key=" + getResources().getString(R.string.google_maps_webkey);
+        String url = "https://taxiserviceproject-92fe6.appspot.com?" +
+                "position=" + origin +
+                "&destination=" + destination;
 
         query.run(url, new Callback() {
             @Override
@@ -202,30 +189,20 @@ public class Ordering extends AppCompatActivity implements SwipeRefreshLayout.On
                 try {
                     String jsonString = response.body().string();
                     Gson g = new Gson();
-                    RouteResponse routeResponse = g.fromJson(jsonString, RouteResponse.class);
+                    RespCounterCost routeResponse = g.fromJson(jsonString, RespCounterCost.class);
 
                     if (routeResponse.getStatus().equals("OK")) {
                         Ordering.this.runOnUiThread(() -> {
-                            Double approxCost = (double) 50;
-
-                            Route minTimeRoute = routeResponse.getRoutes().get(0);
-                            for (Route route : routeResponse.getRoutes()) {
-                                if (route.getLegs().get(0).getDuration().getValue() < minTimeRoute.getLegs().get(0).getDuration().getValue()) {
-                                    minTimeRoute = route;
-                                }
-                            }
-
-                            approxCost += ((minTimeRoute.getLegs().get(0).getDuration().getValue() / (double) 60) * 7) +
-                                    ((minTimeRoute.getLegs().get(0).getDistance().getValue() / (double) 1000) * 7);
-                            approxCost = Math.ceil(approxCost);
-
-
-                            tvOrderingCost.setText(MessageFormat.format("{0} руб.", approxCost.intValue()));
+                            tvOrderingCost.setText(MessageFormat.format("{0} руб.", routeResponse.getCost()));
                             order = new Order();
-                            order.setApproxCost(approxCost.intValue()); // Записали приблизительную стоимость в заказ
-                            order.setApproxTimeToDest(minTimeRoute.getLegs().get(0).getDuration().getValue());
-                            order.setApproxDistanceToDest(minTimeRoute.getLegs().get(0).getDistance().getValue());
+                            order.setApproxCost(routeResponse.getCost()); // Записали приблизительную стоимость в заказ
+                            order.setApproxTimeToDest(routeResponse.getTime());
+                            order.setApproxDistanceToDest(routeResponse.getDistance());
                         });
+                    }
+                    if(routeResponse.getStatus().equals("FAIL")){
+                        Log.d(TAG, "onResponse: ошибка на сервере при определении параметров");
+                        Toast.makeText(Ordering.this,"Ошибка расчета стоимости на сервере",Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception ex) {
                     Log.d(TAG, "onResponse: ошибка при получении маршрута в формате json");

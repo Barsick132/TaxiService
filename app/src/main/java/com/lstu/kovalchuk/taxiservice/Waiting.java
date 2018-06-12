@@ -38,23 +38,14 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.GeoPoint;
 import com.google.gson.Gson;
 import com.google.maps.android.PolyUtil;
-import com.lstu.kovalchuk.taxiservice.mapapi.Route;
-import com.lstu.kovalchuk.taxiservice.mapapi.RouteResponse;
 
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -293,12 +284,10 @@ public class Waiting extends AppCompatActivity implements OnMapReadyCallback {
     // Функция отображения маршрута на карте
     private void routePrint(String origin, String destination) {
         GetQuery query = new GetQuery();
-        String url = "https://maps.googleapis.com/maps/api/directions/json?" +
-                "origin=" + origin +
+        String url = "https://taxiserviceproject-92fe6.appspot.com?" +
+                "position=" + origin +
                 "&destination=" + destination +
-                "&sensor=true" +
-                "&language=ru" +
-                "&key=" + getResources().getString(R.string.google_maps_webkey);
+                "&points=true";
 
         query.run(url, new Callback() {
             @Override
@@ -316,19 +305,12 @@ public class Waiting extends AppCompatActivity implements OnMapReadyCallback {
                 try {
                     String jsonString = response.body().string();
                     Gson g = new Gson();
-                    RouteResponse routeResponse = g.fromJson(jsonString, RouteResponse.class);
+                    RespCounterCost routeResponse = g.fromJson(jsonString, RespCounterCost.class);
 
                     if (routeResponse.getStatus().equals("OK")) {
                         Waiting.this.runOnUiThread(() -> {
                             try {
-                                Route minTimeRoute = routeResponse.getRoutes().get(0);
-                                for (Route route : routeResponse.getRoutes()) {
-                                    if (route.getLegs().get(0).getDuration().getValue() < minTimeRoute.getLegs().get(0).getDuration().getValue()) {
-                                        minTimeRoute = route;
-                                    }
-                                }
-
-                                List<LatLng> mPoints = PolyUtil.decode(minTimeRoute.getOverviewPolyline().getPoints());
+                                List<LatLng> mPoints = PolyUtil.decode(routeResponse.getPoints());
 
                                 PolylineOptions line = new PolylineOptions();
                                 line.width(6f).color(R.color.colorAccent);
@@ -360,6 +342,10 @@ public class Waiting extends AppCompatActivity implements OnMapReadyCallback {
                                 Log.e(TAG, "onResponse: " + ex.getMessage());
                             }
                         });
+                    }
+                    if(routeResponse.getStatus().equals("FAIL")){
+                        Log.d(TAG, "onResponse: ошибка на сервере при определении параметров");
+                        Toast.makeText(Waiting.this,"Ошибка при получении маршрута",Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception ex) {
                     Log.d(TAG, "onResponse: ошибка при получении маршрута в формате json");

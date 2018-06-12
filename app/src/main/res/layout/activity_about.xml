@@ -73,8 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:paddingEnd="0dp"
-            android:paddingStart="20dp"
-            android:text="@string/authorInfo" />
+            android:paddingStart="20dp"/>
 
         <TextView
             android:id="@+id/aboutHeader5"
@@ -86,39 +85,6 @@
 
         <TextView
             android:id="@+id/aboutText5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:paddingEnd="0dp"
-            android:paddingStart="20dp" />
-
-        <TextView
-            android:id="@+id/aboutHeader6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="@string/yandexMaps"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/aboutText6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:paddingEnd="0dp"
-            android:paddingStart="20dp"
-            android:text="@string/yandexMapsInfo" />
-
-        <TextView
-            android:id="@+id/aboutHeader7"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="@string/termsOfUseYandexMaps"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/aboutText7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
