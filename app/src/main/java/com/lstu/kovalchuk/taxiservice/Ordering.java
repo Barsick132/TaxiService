@@ -24,6 +24,7 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -162,7 +163,11 @@ public class Ordering extends AppCompatActivity implements SwipeRefreshLayout.On
     }
 
     private static class GetQuery {
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(15, TimeUnit.SECONDS)
+                .writeTimeout(15, TimeUnit.SECONDS)
+                .readTimeout(15, TimeUnit.SECONDS)
+                .build();
 
         void run(String url, Callback callback) {
             Request request = new Request.Builder()
@@ -238,6 +243,17 @@ public class Ordering extends AppCompatActivity implements SwipeRefreshLayout.On
         }
     }
 
+    private void showProgressBar(boolean isShow){
+        if(isShow){
+            svScrollView.setVisibility(View.GONE);
+            llProgressBar.setVisibility(View.VISIBLE);
+        }else {
+            svScrollView.setVisibility(View.VISIBLE);
+            llProgressBar.setVisibility(View.GONE);
+        }
+    }
+
+
     public void callTaxi(View view) {
         if (order == null) {
             Toast.makeText(this,
@@ -253,6 +269,9 @@ public class Ordering extends AppCompatActivity implements SwipeRefreshLayout.On
             Log.d(TAG, "callTaxi: адрес не определен");
             return;
         }
+
+        showProgressBar(true);
+
         String sWhenceAddress = whenceAddress.getLocality() + ", " + getStringAddress(whenceAddress);
         if (!metEntranceWhence.getText().toString().equals(""))
             sWhenceAddress += ", п. " + metEntranceWhence.getText().toString();
@@ -267,8 +286,6 @@ public class Ordering extends AppCompatActivity implements SwipeRefreshLayout.On
         String position = whenceAddress.getLatitude() + "," + whenceAddress.getLongitude();
         String destination = whereAddress.getLatitude() + "," + whereAddress.getLongitude();
         CountDownLatch countDownLatch = new CountDownLatch(1);
-        svScrollView.setVisibility(View.GONE);
-        llProgressBar.setVisibility(View.VISIBLE);
         createOrder(FirebaseAuth.getInstance().getUid(), sWhenceAddress, position, 
                 sWhereAddress, destination, cashlessPay, etComment.getText().toString(), countDownLatch);
         try {
@@ -276,8 +293,8 @@ public class Ordering extends AppCompatActivity implements SwipeRefreshLayout.On
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        svScrollView.setVisibility(View.VISIBLE);
-        llProgressBar.setVisibility(View.GONE);
+
+        showProgressBar(false);
         /*
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String orderID = db.collection("orders").document().getId();
