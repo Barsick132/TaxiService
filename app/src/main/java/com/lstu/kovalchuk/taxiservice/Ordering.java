@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -188,7 +189,8 @@ public class Ordering extends AppCompatActivity implements SwipeRefreshLayout.On
             @Override
             public void onFailure(Call call, IOException e) {
                 try {
-                    Toast.makeText(Ordering.this, "Проверьте соединение с сетью", Toast.LENGTH_SHORT).show();
+                    runOnUiThread(() -> Toast.makeText(Ordering.this,
+                            "Проверьте соединение с сетью", Toast.LENGTH_SHORT).show());
                     Log.d(TAG, "onFailure: не удалось получить маршруты в формате json");
                 } catch (Exception ex) {
                     Log.e(TAG, "onFailure: " + ex.getMessage());
@@ -211,13 +213,13 @@ public class Ordering extends AppCompatActivity implements SwipeRefreshLayout.On
                             order.setApproxDistanceToDest(routeResponse.getDistance());
                         });
                     }
-                    if(routeResponse.getStatus().equals("FAIL")){
+                    if (routeResponse.getStatus().equals("FAIL")) {
                         Log.d(TAG, "onResponse: ошибка на сервере при определении параметров");
-                        Toast.makeText(Ordering.this,"Ошибка расчета стоимости на сервере",Toast.LENGTH_SHORT).show();
+                        runOnUiThread(() -> Toast.makeText(Ordering.this, "Ошибка расчета стоимости на сервере", Toast.LENGTH_SHORT).show());
                     }
                 } catch (Exception ex) {
                     Log.d(TAG, "onResponse: ошибка при получении маршрута в формате json");
-                    Toast.makeText(Ordering.this, "Проверьте соединение с сетью", Toast.LENGTH_SHORT).show();
+                    runOnUiThread(() -> Toast.makeText(Ordering.this, "Проверьте соединение с сетью", Toast.LENGTH_SHORT).show());
                 }
             }
         });
@@ -243,16 +245,15 @@ public class Ordering extends AppCompatActivity implements SwipeRefreshLayout.On
         }
     }
 
-    private void showProgressBar(boolean isShow){
-        if(isShow){
+    private void showProgressBar(boolean isShow) {
+        if (isShow) {
             svScrollView.setVisibility(View.GONE);
             llProgressBar.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             svScrollView.setVisibility(View.VISIBLE);
             llProgressBar.setVisibility(View.GONE);
         }
     }
-
 
     public void callTaxi(View view) {
         if (order == null) {
@@ -270,8 +271,6 @@ public class Ordering extends AppCompatActivity implements SwipeRefreshLayout.On
             return;
         }
 
-        showProgressBar(true);
-
         String sWhenceAddress = whenceAddress.getLocality() + ", " + getStringAddress(whenceAddress);
         if (!metEntranceWhence.getText().toString().equals(""))
             sWhenceAddress += ", п. " + metEntranceWhence.getText().toString();
@@ -285,16 +284,9 @@ public class Ordering extends AppCompatActivity implements SwipeRefreshLayout.On
 
         String position = whenceAddress.getLatitude() + "," + whenceAddress.getLongitude();
         String destination = whereAddress.getLatitude() + "," + whereAddress.getLongitude();
-        CountDownLatch countDownLatch = new CountDownLatch(1);
-        createOrder(FirebaseAuth.getInstance().getUid(), sWhenceAddress, position, 
-                sWhereAddress, destination, cashlessPay, etComment.getText().toString(), countDownLatch);
-        try {
-            countDownLatch.await();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        createOrder(FirebaseAuth.getInstance().getUid(), sWhenceAddress, position,
+                sWhereAddress, destination, cashlessPay, etComment.getText().toString());
 
-        showProgressBar(false);
         /*
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         String orderID = db.collection("orders").document().getId();
@@ -327,7 +319,9 @@ public class Ordering extends AppCompatActivity implements SwipeRefreshLayout.On
 
     private void createOrder(String clientUID, String whenceAddress, String whenceGeoPoint,
                              String whereAddress, String whereGeoPoint,
-                             boolean cashlessPay, String comment, CountDownLatch countDownLatch) {
+                             boolean cashlessPay, String comment) {
+        showProgressBar(true);
+
         GetQuery query = new GetQuery();
         String url = "https://taxiserviceproject-92fe6.appspot.com/createOrder?" +
                 "clientUID=" + clientUID +
@@ -342,12 +336,14 @@ public class Ordering extends AppCompatActivity implements SwipeRefreshLayout.On
             @Override
             public void onFailure(Call call, IOException e) {
                 try {
-                    Toast.makeText(Ordering.this, "Не удалось отправить заказ. Проверьте соединение с сетью", Toast.LENGTH_SHORT).show();
+                    runOnUiThread(() -> {
+                        showProgressBar(false);
+                        Toast.makeText(Ordering.this, "Не удалось отправить заказ. Проверьте соединение с сетью", Toast.LENGTH_SHORT).show();
+                    });
                     Log.d(TAG, "onFailure: не удалось создать заказ");
                 } catch (Exception ex) {
                     Log.e(TAG, "onFailure: " + ex.getMessage());
                 }
-                countDownLatch.countDown();
             }
 
             @Override
@@ -368,17 +364,21 @@ public class Ordering extends AppCompatActivity implements SwipeRefreshLayout.On
                             finish();
                         });
                     }
-                    if(respCreateOrder.getStatus().equals("FAIL")){
-                        Toast.makeText(Ordering.this,
-                                "Не удалось отправить заказ. Проверьте соединение с сетью",
-                                Toast.LENGTH_SHORT).show();
+                    if (respCreateOrder.getStatus().equals("FAIL")) {
+                        runOnUiThread(() -> {
+                            showProgressBar(false);
+                            Toast.makeText(Ordering.this,
+                                    "Не удалось отправить заказ. Проверьте соединение с сетью",
+                                    Toast.LENGTH_SHORT).show();
+                        });
                         Log.d(TAG, "onResponse: ошибка создания заказа");
                     }
                 } catch (Exception ex) {
                     Log.e(TAG, "onResponse: ошибка создания заказа");
-                    Toast.makeText(Ordering.this, "Не удалось отправить заказ. Проверьте соединение с сетью", Toast.LENGTH_SHORT).show();
+                    runOnUiThread(() -> Toast.makeText(Ordering.this,
+                            "Не удалось отправить заказ. Проверьте соединение с сетью",
+                            Toast.LENGTH_SHORT).show());
                 }
-                countDownLatch.countDown();
             }
         });
     }

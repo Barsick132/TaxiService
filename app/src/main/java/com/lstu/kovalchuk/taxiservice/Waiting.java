@@ -293,7 +293,7 @@ public class Waiting extends AppCompatActivity implements OnMapReadyCallback {
             @Override
             public void onFailure(Call call, IOException e) {
                 try {
-                    Toast.makeText(Waiting.this, "Не удалось отобразить маршрут", Toast.LENGTH_SHORT).show();
+                    runOnUiThread(() -> Toast.makeText(Waiting.this, "Не удалось отобразить маршрут", Toast.LENGTH_SHORT).show());
                     Log.d(TAG, "onFailure: не удалось получить маршруты в формате json");
                 } catch (Exception ex) {
                     Log.e(TAG, "onFailure: " + ex.getMessage());
@@ -345,11 +345,11 @@ public class Waiting extends AppCompatActivity implements OnMapReadyCallback {
                     }
                     if(routeResponse.getStatus().equals("FAIL")){
                         Log.d(TAG, "onResponse: ошибка на сервере при определении параметров");
-                        Toast.makeText(Waiting.this,"Ошибка при получении маршрута",Toast.LENGTH_SHORT).show();
+                        runOnUiThread(() -> Toast.makeText(Waiting.this,"Ошибка при получении маршрута",Toast.LENGTH_SHORT).show());
                     }
                 } catch (Exception ex) {
                     Log.d(TAG, "onResponse: ошибка при получении маршрута в формате json");
-                    Toast.makeText(Waiting.this, "Не удалось отобразить маршрут", Toast.LENGTH_SHORT).show();
+                    runOnUiThread(() -> Toast.makeText(Waiting.this, "Не удалось отобразить маршрут", Toast.LENGTH_SHORT).show());
                 }
             }
         });
