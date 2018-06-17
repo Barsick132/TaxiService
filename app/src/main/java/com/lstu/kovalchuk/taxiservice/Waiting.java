@@ -441,6 +441,11 @@ public class Waiting extends AppCompatActivity implements OnMapReadyCallback {
                         Log.d(TAG, "onComplete: местоположение определено!");
                         currentLocation = (Location) task.getResult();
 
+                        if(currentLocation==null){
+                            Log.d(TAG, "getDeviceLocation: местоположение НЕ определено");
+                            Toast.makeText(Waiting.this, "Не удалось определить текущее местоположение", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         // Меняем местоположение камеры
                         moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
                     } else {
